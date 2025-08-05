@@ -49,7 +49,7 @@
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">Username or Email</label>
-                                <input class="form-control" type="email" id="email" name="email" required
+                                <input class="form-control" type="text" id="email" name="login" required
                                     placeholder="Enter username or email">
                                 @error('email')
                                     <small class="text-danger">{{ $message }}</small>

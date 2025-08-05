@@ -3,20 +3,31 @@
     <div id="carouselExampleCaptions" class="carousel slide">
         <div class="carousel-indicators">
 
-            @foreach ($sliders as $slider)
+            @forelse ($sliders as $slider)
                 <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ $loop->index }}"
                     class="{{ $loop->first ? 'active' : '' }}" aria-current="{{ $loop->first ? 'true' : 'false' }}"
                     aria-label="Slide {{ $loop->iteration }}"></button>
-            @endforeach
+
+            @empty
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1">
+                </button>
+            @endforelse
         </div>
         <div class="carousel-inner">
 
-            @foreach ($sliders as $slider)
+            @forelse ($sliders as $slider)
                 <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
                     <img src="{{ asset('storage/' . $slider->image) }}" class="d-block w-100" alt="carousel">
 
                 </div>
-            @endforeach
+
+            @empty
+                <div class="carousel-item active">
+                    <img src="{{ asset('frontend/assets/img/hero-carousel/no-photo.png') }}" class="d-block w-100"
+                        alt="">
+                </div>
+            @endforelse
         </div>
 
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"

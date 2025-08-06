@@ -16,6 +16,10 @@ Route::get('/', [FrontendController::class, 'index'])->name('index');
 Route::get('/struktur-organisasi', [PagesController::class, 'allStructure'])->name('all.structure');
 Route::get('/blogs', [PagesController::class, 'allNews'])->name('all.news');
 Route::get('/blogs/{slug}', [PagesController::class, 'singleBlog'])->name('single.blog');
+Route::get('/blogs/divisi/{slug}', [PagesController::class, 'blogByDivisi'])->name('blog.divisi');
+Route::get('/blogs/kategori/{slug}', [PagesController::class, 'blogByCategory'])->name('blog.category');
+
+
 Route::get('/gallery', [PagesController::class, 'gallery'])->name('gallery');
 Route::get('/contact', function () {
     return view('components.body_home.pages.contact');
@@ -84,4 +88,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/slider/index', [SliderController::class, 'index'])->name('admin.slider.index');
     Route::get('/admin/slider/create', [SliderController::class, 'create'])->name('admin.slider.create');
     Route::post('/admin/slider/store', [SliderController::class, 'store'])->name('admin.slider.store');
+    Route::get('/admin/slider/{id}/edit', [SliderController::class, 'edit'])->name('admin.slider.edit');
+    Route::put('/admin/slider/{id}', [SliderController::class, 'update'])->name('admin.slider.update');
+    Route::delete('/admin/slider/{id}', [SliderController::class, 'destroy'])->name('admin.slider.delete');
 });

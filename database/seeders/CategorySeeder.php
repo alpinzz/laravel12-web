@@ -14,15 +14,18 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         Category::create([
-            'name' => 'Artikel'
+            'name' => 'Artikel',
+            // 'slug' => 'artikel'
         ]);
 
         Category::create([
-            'name' => 'Kegiatan'
+            'name' => 'Kegiatan',
+            // 'slug' => 'kegiatan'
         ]);
 
         Category::create([
-            'name' => 'Islam dan Ke-Muhammadiyahan'
+            'name' => 'Islam dan Ke-Muhammadiyahan',
+            // 'slug' => 'islam-kemuhammadiyahan'
         ]);
     }
 }

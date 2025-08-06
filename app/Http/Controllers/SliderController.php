@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SliderController extends Controller
 {
@@ -41,7 +42,7 @@ class SliderController extends Controller
             'image' => $imagePath
         ]);
 
-        return redirect()->back()->with('message', 'Slider berhasil ditambahkan');
+        return redirect()->route('admin.slider.index')->with('message', 'Slider berhasil ditambahkan');
     }
 
     /**
@@ -55,24 +56,48 @@ class SliderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $slider = Slider::findOrFail($id);
+
+        return view('admin.slider.edit', compact('slider'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,  $id)
     {
-        //
+        $slider = Slider::findOrFail($id);
+
+        $request->validate([
+            'image' => 'nullable|image|mimes:png,jpg,jpeg|max:2048'
+        ]);
+
+        if ($request->hasFile('image')) {
+            Storage::delete($slider->image);
+            $slider->image = $request->file('image')->store('slider', 'public');
+        }
+
+        $slider->save();
+
+        return redirect()->route('admin.slider.index')->with('message', 'Berhasil update slider.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $slider = Slider::findOrFail($id);
+
+        if ($slider->image && Storage::exists($slider->image)); {
+            Storage::delete($slider->image);
+        }
+
+
+        $slider->delete();
+
+        return redirect()->back()->with('success', 'Berhasil hapus gambar slider.');
     }
 }

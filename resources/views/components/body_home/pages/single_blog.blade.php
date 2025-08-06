@@ -10,7 +10,7 @@
                     <div class="breadcrumb-menu-wrap">
                         <div class="breadcrumb-menu">
                             <ul>
-                                <li><a href="index.html">Home</a></li>
+                                <li><a href="{{ route('index') }}">Home</a></li>
                                 <li><img src="{{ asset('frontend/assets/images/blog/right-arrow.svg') }}"
                                         alt="right-arrow"></li>
                                 <li aria-current="page">Blog Details</li>
@@ -37,8 +37,9 @@
                         <div class="lonyo-blog-meta pb-0">
                             <ul>
                                 <li>
-                                    <a href="single-blog.html"><img src="assets/images/blog/date.svg"
-                                            alt="">{{ $blog->divisi->name ?? '-' }}</a> |
+                                    <a
+                                        href="{{ route('blog.divisi', $blog->divisi->slug) }}">{{ $blog->divisi->name ?? '-' }}</a>
+                                    |
                                     {{ $blog->created_at->format('F d, Y') }}
                                 </li>
                             </ul>
@@ -108,6 +109,8 @@
 
                 </div>
 
+
+
                 <div class="col-lg-4">
                     <div class="lonyo-blog-sidebar aos-init aos-animate" data-aos="fade-left" data-aos-duration="700">
                         <div class="lonyo-blog-widgets">
@@ -119,65 +122,45 @@
                             </form>
                         </div>
                         <div class="lonyo-blog-widgets">
-                            <h4>Categories:</h4>
+                            <h4>Kategori</h4>
                             <div class="lonyo-blog-categorie">
                                 <ul>
-                                    <li><a href="single-blog.html">Finance <span>10</span></a></li>
-                                    <li><a href="single-blog.html">Business <span>18</span></a></li>
-                                    <li><a href="single-blog.html">Technology <span>03</span></a></li>
-                                    <li><a href="single-blog.html">Development <span>07</span></a></li>
-                                    <li><a href="single-blog.html">Uncategorized <span>49</span></a></li>
+
+                                    @foreach ($categories as $category)
+                                        <li><a
+                                                href="{{ route('blog.category', $category->slug) }}">{{ $category->name }}<span>{{ $category->blogs_count }}</span></a>
+
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
                         <div class="lonyo-blog-widgets">
                             <h4>Recent Posts</h4>
-                            <a class="lonyo-blog-recent-post-item" href="single-blog.html">
-                                <div class="lonyo-blog-recent-post-thumb">
-                                    <img src="assets/images/blog/b4.png" alt="">
-                                </div>
-                                <div class="lonyo-blog-recent-post-data">
-                                    <ul>
-                                        <li><img src="assets/images/blog/date.svg" alt="">June 15, 2025
-                                        </li>
-                                    </ul>
-                                    <div>
-                                        <h4>7 businesses for easy money</h4>
+                            @foreach ($recentBlogs as $recent)
+                                <a class="lonyo-blog-recent-post-item" href="{{ route('single.blog', $blog->slug) }}">
+                                    <div class="lonyo-blog-recent-post-thumb"
+                                        style="max-width: 80px; max-height: 80px; overflow: hidden;">
+                                        <img style="width: 100%; height: auto; object-fit: cover;"
+                                            src="{{ $recent->image ? asset('storage/' . $recent->image) : asset('frontend/assets/images/blog/b4.png') }}"
+                                            alt="">
                                     </div>
-                                </div>
-                            </a>
-                            <a class="lonyo-blog-recent-post-item" href="single-blog.html">
-                                <div class="lonyo-blog-recent-post-thumb">
-                                    <img src="assets/images/blog/b5.png" alt="">
-                                </div>
-                                <div class="lonyo-blog-recent-post-data">
-                                    <ul>
-                                        <li><img src="assets/images/blog/date.svg" alt="">June 12, 2025
-                                        </li>
-                                    </ul>
-                                    <div>
-                                        <h4>10 Finance apps for you to use</h4>
+                                    <div class="lonyo-blog-recent-post-data">
+                                        <ul>
+                                            <li>{{ $recent->created_at->format('F d, Y') }}</li>
+                                        </ul>
+                                        <div>
+                                            <h4>{{ Str::limit($recent->title, 40) }}</h4>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                            <a class="lonyo-blog-recent-post-item" href="single-blog.html">
-                                <div class="lonyo-blog-recent-post-thumb">
-                                    <img src="assets/images/blog/b6.png" alt="">
-                                </div>
-                                <div class="lonyo-blog-recent-post-data">
-                                    <ul>
-                                        <li><img src="assets/images/blog/date.svg" alt="">June 08, 2025
-                                        </li>
-                                    </ul>
-                                    <div>
-                                        <h4>How to create a stock market</h4>
-                                    </div>
-                                </div>
-                            </a>
+                                </a>
+                            @endforeach
+
                         </div>
 
                     </div>
                 </div>
+
                 <div class="deivdead-line"></div>
 
 

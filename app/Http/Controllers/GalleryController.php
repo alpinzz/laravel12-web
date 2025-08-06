@@ -37,7 +37,7 @@ class GalleryController extends Controller
     public function store(Request $request)
     {
 
-        dd(request()->all(), request()->files);
+        // dd(request()->all(), request()->files);
 
 
         $request->validate([
@@ -53,7 +53,7 @@ class GalleryController extends Controller
                 'image' => 'gallery/' . $filename
             ]);
         }
-        return redirect()->back()->with('message', 'berhasil');
+        return redirect()->route('admin.gallery.index')->with('message', 'berhasil');
     }
 
 

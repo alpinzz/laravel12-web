@@ -20,6 +20,9 @@
                     </a>
                 </div>
 
+                @if ($sliders->isEmpty())
+                    <div class="alert alert-warning">Belum ada data gambar slider.</div>
+                @endif
 
                 <div class="table-responsive">
                     <table class="table table-hover mb-0">
@@ -43,11 +46,14 @@
                                     </td>
 
                                     <td>
-                                        <a class="btn btn-primary btn-sm" href="#" role="button">Edit</a>
-                                        <form action="#" method="POST" style="display: inline">
+                                        <a class="btn btn-primary btn-sm"
+                                            href="{{ route('admin.slider.edit', $slider->id) }}" role="button">Edit</a>
+                                        <form action="{{ route('admin.slider.delete', $slider->id) }}" method="POST"
+                                            id="delete-form-{{ $slider->id }}" style="display: inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="button" class="btn btn-danger btn-sm">Hapus</button>
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                onclick="confirmDelete({{ $slider->id }})">Hapus</button>
                                         </form>
                                     </td>
                                 </tr>

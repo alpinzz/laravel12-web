@@ -10,6 +10,7 @@
     --light-color4: #c9ccd5;
     --font-color: #bf0000;
     --default-font-color: #000000;
+    --meta-blog-color: #a2af9b;
     --color-title: #ff3f33;
 }
 @media (min-width: 1400px) {
@@ -4125,6 +4126,7 @@ th span {
     display: flex;
     gap: 24px;
     align-items: center;
+    list-style-type: none;
 }
 @media (max-width: 767px) {
     .tag-share-social {
@@ -4137,6 +4139,7 @@ th span {
     flex-wrap: wrap;
 }
 .tag-share-social ul li {
+    list-style-type: none;
     display: inline-block;
 }
 .tag-share-social ul li a {
@@ -4160,6 +4163,7 @@ th span {
     height: 45px;
 }
 .lonyo-social-wrap ul li {
+    list-style-type: none;
     display: inline-block;
     margin-right: 15px;
     transition: all 0.4s;
@@ -4228,7 +4232,7 @@ th span {
 }
 .lonyo-blog-thumb {
     border-radius: 15px;
-    margin-bottom: 24px;
+    margin-bottom: 10px;
     position: relative;
     overflow: hidden;
 }
@@ -4239,7 +4243,7 @@ th span {
     transition: all 0.4s;
 }
 .lonyo-blog-meta {
-    padding-bottom: 24px;
+    padding-bottom: 10px;
 }
 .lonyo-blog-meta ul li {
     display: inline-block;
@@ -4247,6 +4251,7 @@ th span {
     position: relative;
     padding-left: 30px;
     font-size: 0.8rem;
+    color: var(--meta-blog-color);
 }
 .lonyo-blog-meta ul li:last-child {
     margin-right: 0;
@@ -4257,13 +4262,14 @@ th span {
     }
 }
 .lonyo-blog-meta ul li a {
+    color: var(--meta-blog-color);
     font-size: 0.8rem;
     line-height: 25px;
-    color: var(--heading-color);
 }
 
 .lonyo-blog-meta ul li a:hover {
-    text-decoration: underline solid var(--default-font-color);
+    color: var(--color-title);
+    text-decoration: underline solid var(--color-title);
 }
 
 .lonyo-blog-meta ul li a img {
@@ -4275,7 +4281,7 @@ th span {
     padding-bottom: 24px;
 }
 .lonyo-blog-content a {
-    color: var(--heading-color);
+    color: var(--default-font-color);
 }
 .lonyo-blog-content h2 {
     padding-top: 0;
@@ -4381,12 +4387,13 @@ th span {
     transition: all 0.4s;
 }
 .lonyo-blog-recent-post-data ul li {
-    font-size: 18px;
-    line-height: 25px;
-    color: var(--heading-color);
-    margin-bottom: 10px;
+    /* margin-left: 5px; */
+    font-size: 12px;
+    line-height: 20px;
+    color: var(--meta-blog-color);
+    margin-bottom: 8px;
     position: relative;
-    padding-left: 30px;
+    /* padding-left: 30px; */
 }
 .lonyo-blog-recent-post-data ul li img {
     position: absolute;
@@ -4394,7 +4401,7 @@ th span {
     left: 0;
 }
 .lonyo-blog-recent-post-data h4 {
-    margin-top: 5px;
+    /* margin-top: 5px; */
     background-image: linear-gradient(currentColor, currentColor);
     background-position: 0 100%;
     background-repeat: no-repeat;
@@ -6752,7 +6759,7 @@ textarea::placeholder {
     -webkit-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
     overflow: hidden;
-    color: var(--body-color);
+    color: var(--default-font-color);
     background-color: var(--font-color);
     overflow: hidden;
     transform-style: preserve-3d;
@@ -7171,24 +7178,25 @@ textarea::placeholder {
 .lonyo-subcribe-btn.blog-title-btn:hover {
     color: var(--heading-color);
 }
+
 #lonyo-submit-btn.blog-btn,
 .lonyo-default-btn.blog-btn,
 .lonyo-subcribe-btn.blog-btn {
-    color: var(--heading-color);
+    color: var(--default-font-color);
     background-color: var(--white-bg);
     border: 1px solid var(--heading-color);
 }
 #lonyo-submit-btn.blog-btn:hover,
 .lonyo-default-btn.blog-btn:hover,
 .lonyo-subcribe-btn.blog-btn:hover {
-    color: var(--light-color);
+    color: var(--white-color);
 }
 #lonyo-submit-btn.blog-btn::after,
 .lonyo-default-btn.blog-btn::after,
 .lonyo-subcribe-btn.blog-btn::after {
     width: 300px;
     height: 300px;
-    background-color: var(--heading-color);
+    background-color: var(--color-title);
 }
 #lonyo-submit-btn.extra-btn,
 .lonyo-default-btn.extra-btn,
@@ -7793,4 +7801,15 @@ a.lonyo-default-btn.sm-size {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.next {
+    color: #dc2626;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.next:hover {
+    color: #cb0404;
+    border-bottom: 1px solid #cb0404;
 }

@@ -65,6 +65,11 @@
                                 @enderror
                             </div>
 
+                            <div class="mb-3 text-end">
+                                <a href="{{ route('password.request') }}" class="text-muted">Lupa password?</a>
+                            </div>
+
+
                             <div class="d-grid mb-3">
                                 <button class="btn btn-primary" type="submit">Masuk</button>
                             </div>

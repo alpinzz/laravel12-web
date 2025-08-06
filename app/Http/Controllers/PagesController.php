@@ -35,6 +35,8 @@ class PagesController extends Controller
         $perPage = 5;
         $blogs = Blogs::with(['divisi', 'category'])->latest()->paginate(5);
 
+        // $category = Category::where('slug', $slug)->firstOrFail();
+
         $categories = Category::withCount('blogs')->get();
 
         $currentPage = $blogs->currentPage();
@@ -61,6 +63,30 @@ class PagesController extends Controller
 
 
         return view('components.body_home.pages.single_blog', compact('blog', 'recentBlogs', 'categories'));
+    }
+
+    public function blogByDivisi($slug)
+    {
+        $divisi = Divisi::where('slug', $slug)->firstOrFail();
+
+        $blogs = $divisi->blogs()->latest()->paginate(6);
+
+        $categories = Category::withCount('blogs')->get();
+        $recentBlogs = Blogs::latest()->take(3)->get();
+        // $recentBlogs = Blogs::latest()->where('id', '!=', $blogs->id)->take(3)->get();
+
+        return view('components.body_home.pages.blog_by_divisi', compact('blogs', 'categories', 'recentBlogs', 'divisi'));
+    }
+
+
+    public function blogByCategory($slug)
+    {
+        $category = Category::where('slug', $slug)->firstOrFail();
+        $blogs = $category->blogs()->latest()->paginate(6);
+        $categories = Category::withCount('blogs')->get();
+        $recentBlogs = Blogs::latest()->take(3)->get();
+
+        return view('components.body_home.pages.blog_by_category', compact('category', 'blogs', 'categories', 'recentBlogs'));
     }
 
     public function gallery()

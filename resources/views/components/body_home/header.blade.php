@@ -122,11 +122,11 @@
                 <div class="lonyo-header-info-wraper2">
 
                     @auth
-                        <div class="lonyo-header-info-content">
+                        {{-- <div class="lonyo-header-info-content">
                             <ul>
                                 <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
                             </ul>
-                        </div>
+                        </div> --}}
                     @else
                         <div class="lonyo-header-info-content">
                             <ul>

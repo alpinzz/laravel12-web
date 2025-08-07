@@ -35,12 +35,22 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255', 'unique:users'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', 'in:admin,author'],
+            'division_id' => ['nullable', 'required_if:role,bidang', 'in:bph,organisasi,kader,hikmah,rpk,olahraga,medkom,tkk'],
         ]);
+
+        if ($request->role === 'admin' && $request->filled('division')) {
+            return back()->withErrors(['division' => 'Admin tidak bisa memiliki bidang.'])->withInput();
+        }
+
+        $division = $request->role === 'author' ? $request->division_id : null;
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => $request->role,
+            'division' => $division,
         ]);
 
         // dd($user);
@@ -48,7 +58,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        // return redirect(route('dashboard', absolute: false));
 
         return redirect()->route('verification.notice');
     }

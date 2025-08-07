@@ -41,20 +41,59 @@
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
 
-                            @if (session('error'))
+                            {{-- @if (session('error'))
                                 <div class="alert alert-danger">
                                     {{ session('error') }}
                                 </div>
+                            @endif --}}
+
+                            @if ($errors->has('login'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('login') }}
+                                </div>
                             @endif
+
+                            @if ($errors->has('password'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('password') }}
+                                </div>
+                            @endif
+
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">Username or Email</label>
                                 <input class="form-control" type="text" id="email" name="login" required
                                     placeholder="Enter username or email">
-                                @error('email')
+                                {{-- @error('email')
                                     <small class="text-danger">{{ $message }}</small>
-                                @enderror
+                                @enderror --}}
                             </div>
+
+
+                            <div class="mb-3">
+                                <label for="role" class="form-label">Role</label>
+                                <select class="form-control" name="role" id="role" required
+                                    onchange="toggleDivision()">
+                                    <option value="admin">Admin</option>
+                                    <option value="author">Author</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3" id="division-group" style="display: none;">
+                                <label for="division" class="form-label">Divisi</label>
+                                <select class="form-control" name="division" id="division">
+                                    <option value="">Pilih Bidang</option>
+                                    <option value="bph">BPH</option>
+                                    <option value="organisasi">Bidang Organisasi</option>
+                                    <option value="kader">Bidang Kader</option>
+                                    <option value="hikmah">Bidang Hikmah</option>
+                                    <option value="rpk">Bidang RPK</option>
+                                    <option value="olahraga">Bidang Olahraga dan Kepemudaan</option>
+                                    <option value="medkom">Bidang Medkom</option>
+                                    <option value="tkk">Bidang TKK</option>
+                                </select>
+                            </div>
+
 
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
@@ -100,6 +139,16 @@
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+
+    <script>
+        function toggleDivision() {
+            const role = document.getElementById('role').value;
+            const divisionGroup = document.getElementById('division-group');
+            divisionGroup.style.display = (role === 'author') ? 'block' : 'none';
+        }
+
+        document.addEventListener("DOMContentLoaded", toggleDivision);
+    </script>
 </body>
 
 </html>

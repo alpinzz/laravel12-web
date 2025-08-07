@@ -2,12 +2,14 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use League\Config\Exception\ValidationException as ExceptionValidationException;
 
 class LoginRequest extends FormRequest
 {
@@ -29,6 +31,8 @@ class LoginRequest extends FormRequest
         return [
             'login' => ['required', 'string'],
             'password' => ['required', 'string'],
+            'role' => ['required', 'in:admin,author'],
+            'division' => ['nullable', 'required_if:role,bidang', 'in:bph,organisasi,kader,hikmah,rpk,olahraga,medkom,tkk']
         ];
     }
 
@@ -43,13 +47,29 @@ class LoginRequest extends FormRequest
 
         $login_type = filter_var($this->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
 
-        if (! Auth::attempt([$login_type => $this->input('login'), 'password' => $this->input('password')], $this->boolean('remember'))) {
+        // if (! Auth::attempt([$login_type => $this->input('login'), 'password' => $this->input('password')], $this->boolean('remember'))) {
+        //     RateLimiter::hit($this->throttleKey());
+
+        //     throw ValidationException::withMessages([
+        //         'login' => trans('auth.failed'),
+        //     ]);
+        // }
+
+        $user = User::where($login_type, $this->input('login'))->where('role', $this->input('role'))
+            ->when($this->input('role') === 'author', function ($query) {
+                $query->where('division', $this->input('division'));
+            })
+            ->first();
+
+        if (! $user || ! \Hash::check($this->input('password'), $user->password)) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
                 'login' => trans('auth.failed'),
             ]);
         }
+
+        Auth::login($user);
 
         RateLimiter::clear($this->throttleKey());
     }

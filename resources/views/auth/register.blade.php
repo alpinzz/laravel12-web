@@ -26,7 +26,8 @@
 
             <div class="text-center mb-4">
                 <a href="/">
-                    <img src="{{ asset('frontend/assets/images/logo/LOGO AR.png') }}" alt="Logo" height="40">
+                    <img src="{{ asset('frontend/assets/images/logo/logo_AR-removebg-preview.webp') }}" alt="Logo"
+                        height="40">
                 </a>
             </div>
 
@@ -60,6 +61,26 @@
                 </div>
 
                 <div class="form-group mb-3">
+                    <label for="role" class="form-label">Role</label>
+                    <select class="form-control" name="role" id="role" onchange="toggleDivision()" required>
+                        <option value="admin">Admin
+                        </option>
+                        <option value="author">Author</option>
+                    </select>
+                </div>
+
+                <div class="form-group mb-3" id="division-group" style="display: none">
+                    <label for="division_id" class="form-label">Divisi</label>
+                    <select class="form-control" name="division_id" id="division_id">
+                        <option value="">Pilih Bidang</option>
+                        @foreach (\App\Models\Divisi::all() as $division)
+                            <option value="{{ $division->slug }}">{{ $division->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+
+                <div class="form-group mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input class="form-control" type="password" name="password" id="password" required
                         placeholder="Enter your password">
@@ -87,6 +108,16 @@
     <script src="{{ asset('backend/assets/libs/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('backend/assets/js/app.js') }}"></script>
+
+    <script>
+        function toggleDivision() {
+            const role = document.getElementById('role').value;
+            const divisionGroup = document.getElementById('division-group');
+            divisionGroup.style.display = (role === 'author') ? 'block' : 'none';
+        }
+
+        document.addEventListener("DOMContentLoaded", toggleDivision);
+    </script>
 
 </body>
 

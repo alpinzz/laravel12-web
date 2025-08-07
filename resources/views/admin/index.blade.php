@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :title="$title">
     <div class="container-xxl">
 
         <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">

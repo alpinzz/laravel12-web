@@ -50,7 +50,7 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    public function division()
+    public function divisi()
     {
         return $this->belongsTo(\App\Models\Divisi::class, 'division', 'slug');
     }

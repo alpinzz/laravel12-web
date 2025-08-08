@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :title="$title">
     <div class="container-xxl">
 
         <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
@@ -10,7 +10,7 @@
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title mb-0">Blogs</h5>
-            </div><!-- end card header -->
+            </div>
 
             <div class="card-body">
 
@@ -31,6 +31,13 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Judul</th>
                                 <th scope="col">Gambar</th>
+
+                                @auth
+                                    @if (auth()->user()->role === 'admin')
+                                        <th scope="col">Penulis</th>
+                                    @endif
+                                @endauth
+
                                 <th scope="col">Konten</th>
                                 <th scope="col">Aksi</th>
                             </tr>
@@ -49,6 +56,15 @@
                                             <span class="text-muted">Tidak ada gambar.</span>
                                         @endif
                                     </td>
+
+                                    @auth
+                                        @if (auth()->user()->role === 'admin')
+                                            <td scope="row">
+                                                {{ $blog->divisi->name }}</td>
+                                        @endif
+                                    @endauth
+
+
                                     <td>
                                         {!! Str::limit(strip_tags($blog->content), 50) !!}
                                     </td>

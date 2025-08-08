@@ -4,8 +4,7 @@
             <div class="col-8 col-sm-auto">
                 <div class="header-logo1">
                     <a href="index.html">
-                        <img src="{{ asset('frontend/assets/images/logo/logo_AR-removebg-preview.webp') }}"
-                            alt="logo" />
+                        <img src="{{ asset('frontend/assets/images/logo/logo-header.svg') }}" alt="logo" />
                     </a>
                 </div>
             </div>

@@ -17,7 +17,8 @@ class Blogs extends Model
         'image',
         'content',
         'divisi_id',
-        'category_id'
+        'category_id',
+        'user_id'
     ];
 
     protected static function boot()
@@ -40,6 +41,11 @@ class Blogs extends Model
 
     public function divisi()
     {
-        return $this->belongsTo(Divisi::class);
+        return $this->belongsTo(Divisi::class, 'divisi_id');
+    }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

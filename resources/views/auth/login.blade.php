@@ -41,11 +41,7 @@
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
 
-                            {{-- @if (session('error'))
-                                <div class="alert alert-danger">
-                                    {{ session('error') }}
-                                </div>
-                            @endif --}}
+
 
                             @if ($errors->has('login'))
                                 <div class="alert alert-danger">

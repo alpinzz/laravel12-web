@@ -14,10 +14,19 @@ class StructureController extends Controller
 {
     public function index($slug)
     {
+
+        $user = auth()->user();
+
+        if ($user->role === 'author' && $user->division !== $slug) {
+            abort(403, 'Anda tidak diizinkan mengakses bidang ini.');
+        }
+
+
         $division = Divisi::where('slug', $slug)->firstOrFail();
         $members = $division->members()->orderBy('order')->get();
+        $title = 'Admin ' . $division->name;
 
-        return view('admin.structure.index', compact('division', 'members'));
+        return view('admin.structure.index', compact('division', 'members', 'title'));
     }
 
     public function create($slug)
@@ -35,7 +44,9 @@ class StructureController extends Controller
             'tkk' => ['Ketua Bidang', 'Sekretaris Bidang', 'Anggota'],
         };
 
-        return view('admin.structure.create', compact('division', 'positions'));
+        $title = 'Admin ' . $division->name;
+
+        return view('admin.structure.create', compact('division', 'positions', 'title'));
     }
 
     public function store(Request $request)
@@ -114,7 +125,9 @@ class StructureController extends Controller
             'tkk' => ['Ketua Bidang', 'Sekretaris Bidang', 'Anggota'],
         };
 
-        return view('admin.structure.edit', compact('division', 'member', 'positions'));
+        $title = 'Admin ' . $division->name;
+
+        return view('admin.structure.edit', compact('division', 'member', 'positions', 'title'));
     }
 
     public function update(Request $request, $id)
@@ -158,18 +171,22 @@ class StructureController extends Controller
     }
 
 
-    public function delete($id)
+    public function delete($slug, $id)
     {
+        $user = auth()->user();
+
+        if ($user->role === 'author' && $user->division !== $slug) {
+            abort(403, 'Anda tidak diizinkan mengakses bidang ini.');
+        }
+
         $member = OrganizationalStructure::findOrFail($id);
 
-        // Hapus image
         if ($member->image && Storage::disk('public')->exists($member->image)) {
-            Storage::disk('public')->delete($member->image);
+            Storage::disk()->delete($member->image);
         }
 
         $member->delete();
 
-        // return response()->json(['message' => 'Data berhasil dihapus.']);
-        return redirect()->back()->with('message', 'Data Berhasil Dihapus.');
+        return redirect()->route('admin.structure.index', ['slug' => $slug])->with('message', 'Data Berhasil dihapus.');
     }
 }

@@ -56,7 +56,7 @@
                                             href="{{ route('admin.structure.edit', ['slug' => $division->slug, 'id' => $member->id]) }}"
                                             role="button">Edit</a>
                                         <form
-                                            action="{{ route('admin.structure.delete', ['slug' => $division->id, 'id' => $member->id]) }}"
+                                            action="{{ route('admin.structure.delete', ['slug' => $division->slug, 'id' => $member->id]) }}"
                                             method="POST" id="delete-form-{{ $member->id }}" style="display: inline">
                                             @csrf
                                             @method('DELETE')

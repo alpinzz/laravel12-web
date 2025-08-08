@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :title="$title">
 
     <div class="container-xxl">
 
@@ -47,16 +47,22 @@
                                     </div>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label for="divisi_id">Bidang</label>
-                                    <select name="divisi_id" id="divisi_id" class="form-select">
+                                @auth
+                                    @if (Auth::user()->role === 'admin')
+                                        <div class="mb-3">
+                                            <label for="divisi_id">Bidang</label>
+                                            <select name="divisi_id" id="divisi_id" class="form-select">
 
-                                        <option value="" disabled selected>Pilih Bidang</option>
-                                        @foreach ($divisions as $divisi)
-                                            <option value="{{ $divisi->id }}">{{ $divisi->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                                <option value="" disabled selected>Pilih Bidang</option>
+                                                @foreach ($divisions as $divisi)
+                                                    <option value="{{ $divisi->id }}">{{ $divisi->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    @else
+                                        <input type="hidden" name="divisi_id" value="{{ Auth::user()->division }}">
+                                    @endif
+                                @endauth
 
                                 <label for="content" class="form-label">Konten</label>
                                 <div id="quill-editor" class="mb-3" style="height: 250px; width: 100%;"></div>

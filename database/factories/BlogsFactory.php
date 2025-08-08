@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Blogs;
 use App\Models\Category;
 use App\Models\Divisi;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -24,6 +25,8 @@ class BlogsFactory extends Factory
     {
 
         $title = $this->faker->sentence(6);
+        $divisi = Divisi::inRandomOrder()->first();
+        $user = User::where('division', $divisi->id)->inRandomOrder()->first();
 
         return [
             'title' => $title,
@@ -31,7 +34,8 @@ class BlogsFactory extends Factory
             'image' => null,
             'content' => $this->faker->paragraphs(3, true),
             'category_id' => Category::inRandomOrder()->first()->id ?? 1,
-            'divisi_id' => Divisi::inRandomOrder()->first()->id ?? 1
+            'divisi_id' => $divisi->id,
+            'user_id' => $user->id,
         ];
     }
 }

@@ -86,7 +86,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/gallery/index', [GalleryController::class, 'index'])->name('admin.gallery.index');
     Route::get('/admin/gallery/create', [GalleryController::class, 'create'])->name('admin.gallery.create');
     Route::post('/admin/gallery', [GalleryController::class, 'store'])->name('admin.gallery.store');
-    Route::post('/admin/gallery/revert', [GalleryController::class, 'revert'])->name('admin.gallery.revert');
+    Route::get('/admin/gallery/{id}/edit', [GalleryController::class, 'edit'])->name('admin.gallery.edit');
+    Route::put('/admin/gallery/{id}', [GalleryController::class, 'update'])->name('admin.gallery.update');
+    Route::delete('/admin/gallery/{id}', [GalleryController::class, 'destroy'])->name('admin.gallery.delete');
 });
 
 // Route slider

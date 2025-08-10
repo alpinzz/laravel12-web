@@ -3,20 +3,38 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function admin()
     {
-        return view('admin.index', [
-            'title' => 'Dashboard Admin'
-        ]);
+        $title = self::title('Dashboard');
+
+        return view('admin.index', compact('title'));
     }
 
     public function author()
     {
-        return view('author.index', [
-            'title' => 'Dashboard' . ucfirst($user->division_id ?? 'Author')
-        ]);
+        $title = self::title('Dashboard');
+        return view('author.index', compact('title'));
+    }
+
+    public static function title($title = '')
+    {
+        $user = Auth::user();
+
+        if ($user->role === 'admin') {
+            return 'Admin ' . $title;
+        }
+
+        if ($user->role === 'author') {
+            $divisionName = optional($user->divisi)->name ?? 'Author';
+            return ($title && stripos($title, $divisionName) === false)
+                ? $divisionName . ' ' . $title
+                : $divisionName;
+        }
+
+        return $title ?: 'Dashboard';
     }
 }

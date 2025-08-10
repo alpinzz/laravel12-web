@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Divisi;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -16,11 +17,13 @@ class GalleryController extends Controller
      */
     public function index()
     {
-
+        $user = auth()->user();
         $galleries = Gallery::latest()->get();
+        $divisions = Divisi::findOrFail($user->division);
 
+        $title = $title = DashboardController::title($divisions->name);
 
-        return view('admin.gallery.index', compact('galleries'));
+        return view('admin.gallery.index', compact('galleries', 'title'));
     }
 
     /**
@@ -28,7 +31,12 @@ class GalleryController extends Controller
      */
     public function create()
     {
-        return view('admin.gallery.create');
+        $user = auth()->user();
+        $divisions = Divisi::findOrFail($user->division);
+
+        $title = $title = DashboardController::title($divisions->name);
+
+        return view('admin.gallery.create', compact('title'));
     }
 
     /**
@@ -37,17 +45,20 @@ class GalleryController extends Controller
     public function store(Request $request)
     {
 
-        // dd(request()->all(), request()->files);
-
-
         $request->validate([
-            'image' => 'required',
-            'image.*' => 'image|mimes:png,jpg,jpeg|max:2048'
+            'files' => 'required',
+            'files.*' => 'image|mimes:png,jpg,jpeg|max:2048'
+        ], [
+            'files.required' => 'Silahkan pilih minimal 1 file',
+            'files.*.image' => 'File yang diunggah harus berupa gambar',
+            'files.*.mimes' => 'Maaf format gambar tidak didukung',
+            'files.*.max' => 'Ukuran gambar max 2MB'
         ]);
 
-        foreach ($request->file('image') as $file) {
+
+        foreach ($request->file('files') as $file) {
             $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('gallery/', $filename, 'public');
+            $file->storeAs('gallery', $filename, 'public');
 
             Gallery::create([
                 'image' => 'gallery/' . $filename
@@ -62,17 +73,20 @@ class GalleryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+    public function show(string $id) {}
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        $user = auth()->user();
+        $divisions = Divisi::findOrFail($user->division);
+        $gallery = Gallery::findOrFail($id);
+
+        $title = $title = DashboardController::title($divisions->name);
+
+        return view('admin.gallery.edit', compact('gallery', 'title'));
     }
 
     /**
@@ -80,7 +94,24 @@ class GalleryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $gallery = Gallery::findOrFail($id);
+
+        $request->validate([
+            'image' => 'nullable|image|mimes:png,jpg,jpeg|max:2048'
+        ]);
+
+        if ($request->hasFile('image')) {
+            if (Storage::disk('public')->exists($gallery->image)) {
+                Storage::disk('public')->delete($gallery->image);
+            }
+            $filename = uniqid() . '.' . $request->image->getClientOriginalExtension();
+            $request->image->storeAs('gallery', $filename, 'public');
+            $gallery->image = 'gallery/' . $filename;
+        }
+
+        $gallery->save();
+
+        return redirect()->route('admin.gallery.index')->with('message', 'Gambar berhasil diupdate.');
     }
 
     /**
@@ -88,6 +119,11 @@ class GalleryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $gallery = Gallery::findOrFail($id);
+        if (Storage::disk('public')->exists($gallery->image)) {
+            Storage::disk('public')->delete($gallery->image);
+        }
+        $gallery->delete();
+        return redirect()->route('admin.gallery.index')->with('message', 'Gambar berhasil dihapus.');
     }
 }

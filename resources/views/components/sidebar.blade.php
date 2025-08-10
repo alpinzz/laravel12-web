@@ -46,11 +46,16 @@
                         </a>
                         <div class="collapse" id="sidebarAuth">
                             <ul class="nav-second-level">
-                                @if (Auth::user()->divisi)
-                                    <li>
-                                        <a href="{{ route('admin.structure.index', Auth::user()->divisi->slug) }}"
-                                            class="to-link">{{ Auth::user()->divisi->name }}</a>
-                                    </li>
+                                @if (Auth::user()->role === 'admin')
+                                    @foreach (\App\Models\Divisi::all() as $division)
+                                        <li>
+                                            <a href="{{ route('admin.structure.index', $division->slug) }}"
+                                                class="tp-link">{{ $division->name }}</a>
+                                        </li>
+                                    @endforeach
+                                @elseif (Auth::user()->role === 'author' && Auth::user()->divisi)
+                                    <li><a href="{{ route('admin.structure.index', Auth::user()->divisi->slug) }}"
+                                            class="tp-link">{{ Auth::user()->divisi->name }}</a></li>
                                 @endif
                             </ul>
                         </div>

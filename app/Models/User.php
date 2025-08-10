@@ -52,6 +52,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function divisi()
     {
-        return $this->belongsTo(\App\Models\Divisi::class, 'division', 'slug');
+        return $this->belongsTo(\App\Models\Divisi::class, 'division', 'id');
     }
 }

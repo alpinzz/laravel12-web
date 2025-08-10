@@ -17,14 +17,15 @@ class StructureController extends Controller
 
         $user = auth()->user();
 
-        if ($user->role === 'author' && $user->division !== $slug) {
+        if ($user->role === 'author' && optional($user->divisi)->slug !== $slug) {
             abort(403, 'Anda tidak diizinkan mengakses bidang ini.');
         }
 
 
+
         $division = Divisi::where('slug', $slug)->firstOrFail();
         $members = $division->members()->orderBy('order')->get();
-        $title = 'Admin ' . $division->name;
+        $title = DashboardController::title($division->name);
 
         return view('admin.structure.index', compact('division', 'members', 'title'));
     }
@@ -44,7 +45,7 @@ class StructureController extends Controller
             'tkk' => ['Ketua Bidang', 'Sekretaris Bidang', 'Anggota'],
         };
 
-        $title = 'Admin ' . $division->name;
+        $title = $title = DashboardController::title($division->name);
 
         return view('admin.structure.create', compact('division', 'positions', 'title'));
     }
@@ -125,7 +126,7 @@ class StructureController extends Controller
             'tkk' => ['Ketua Bidang', 'Sekretaris Bidang', 'Anggota'],
         };
 
-        $title = 'Admin ' . $division->name;
+        $title = $title = DashboardController::title($division->name);
 
         return view('admin.structure.edit', compact('division', 'member', 'positions', 'title'));
     }

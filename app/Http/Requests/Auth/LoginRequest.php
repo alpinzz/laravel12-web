@@ -2,12 +2,14 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\Divisi;
 use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use League\Config\Exception\ValidationException as ExceptionValidationException;
 
@@ -32,7 +34,7 @@ class LoginRequest extends FormRequest
             'login' => ['required', 'string'],
             'password' => ['required', 'string'],
             'role' => ['required', 'in:admin,author'],
-            'division' => ['nullable', 'required_if:role,bidang', 'in:bph,organisasi,kader,hikmah,rpk,olahraga,medkom,tkk']
+            'division' => ['nullable', 'required_if:role,author', 'in:bph,organisasi,kader,hikmah,rpk,olahraga,medkom,tkk']
         ];
     }
 
@@ -55,13 +57,16 @@ class LoginRequest extends FormRequest
         //     ]);
         // }
 
-        $user = User::where($login_type, $this->input('login'))->where('role', $this->input('role'))
-            ->when($this->input('role') === 'author', function ($query) {
-                $query->where('division', $this->input('division'));
-            })
-            ->first();
+        $user = User::where($login_type, $this->input('login'))->where('role', $this->input('role'))->when($this->input('role') === 'author', function ($query) {
+            $divisi = Divisi::where('slug', $this->input('division'))->first();
+            if ($divisi) {
+                return $query->where('division', $divisi->id);
+            } else {
+                $query->whereNull('division');
+            }
+        })->first();
 
-        if (! $user || ! \Hash::check($this->input('password'), $user->password)) {
+        if (!$user || !Hash::check($this->input('password'), $user->password)) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([

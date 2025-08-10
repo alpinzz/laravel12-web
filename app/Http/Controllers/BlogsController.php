@@ -18,10 +18,11 @@ class BlogsController extends Controller
     public function index()
     {
         $user = auth()->user();
+        $divisions = Divisi::findOrFail($user->division);
 
         if ($user->role === 'author') {
             // Ambil ID divisi dari slug yang disimpan di field 'division' milik user
-            $division = \App\Models\Divisi::where('slug', $user->division)->first();
+            $division = Divisi::where('slug', $user->division)->first();
 
             // Jika divisi ditemukan, filter blog berdasarkan divisi_id
             if ($division) {
@@ -37,14 +38,12 @@ class BlogsController extends Controller
                     ->get();
             }
 
-            $title = 'Blog Bidang ' . ($division->name ?? $user->division ?? 'Anda');
+            $title = $title = DashboardController::title($divisions->name);
         } else {
             // Admin lihat semua blog
             $blogs = Blogs::with('category', 'divisi', 'author')
                 ->latest()
                 ->get();
-
-            $title = 'Semua Blog';
         }
 
         return view('admin.blogs.index', compact('blogs', 'title'));
@@ -56,11 +55,12 @@ class BlogsController extends Controller
     public function create()
     {
 
-        $divisions = Divisi::all();
         $user = auth()->user();
+        $divisions = Divisi::all();
+        $division = Divisi::findOrFail($user->division);
 
         $categories = Category::all();
-        $title = 'Admin ' . $user->division;
+        $title = $title = DashboardController::title($division->name);
 
         return view('admin.blogs.create', compact('categories', 'divisions', 'title'));
     }
@@ -118,7 +118,9 @@ class BlogsController extends Controller
     {
         $blog = Blogs::findOrFail($id);
         $categories = Category::all();
-        $title = 'Edit Page';
+        $division = Divisi::findOrFail($blog->divisi_id);
+
+        $title = $title = DashboardController::title($division->name);
 
         return view('admin.blogs.edit', compact('blog', 'categories', 'title'));
     }

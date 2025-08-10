@@ -28,7 +28,7 @@
             <div class="row">
 
                 @foreach ($galleries as $gallery)
-                    <div class="col-xl-{{ [4, 6, 12][rand(0, 2)] }} mb-4">
+                    <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-6">
                         <div class="lonyo-about-us-wrap aos-init aos-animate"
                             data-aos="{{ ['fade-up', 'zoom-in', 'fade-left'][rand(0, 2)] }}"
                             data-aos-duration="{{ rand(500, 1000) }}">

@@ -1701,6 +1701,13 @@ header.lonyo-header-section.lonyo-header-two.sticky-menu {
 .lonyo-header-info-content.content2 ul li a {
     color: var(--light-color);
 }
+
+.header-logo1 img {
+    max-height: 60px;
+    height: auto;
+    width: auto;
+}
+
 .header-logo1 a {
     padding: 30px 0;
 }

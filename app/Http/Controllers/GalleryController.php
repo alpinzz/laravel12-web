@@ -19,12 +19,17 @@ class GalleryController extends Controller
     {
         $user = auth()->user();
         $galleries = Gallery::latest()->get();
-        $divisions = Divisi::findOrFail($user->division);
 
-        $title = $title = DashboardController::title($divisions->name);
+        if ($user->role === 'author') {
+            $divisions = Divisi::findOrFail($user->division);
+            $title = DashboardController::title($divisions->name);
+        } else {
+            $title = DashboardController::title('Gallery');
+        }
 
         return view('admin.gallery.index', compact('galleries', 'title'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -32,9 +37,13 @@ class GalleryController extends Controller
     public function create()
     {
         $user = auth()->user();
-        $divisions = Divisi::findOrFail($user->division);
 
-        $title = $title = DashboardController::title($divisions->name);
+        if ($user->role === 'author') {
+            $division = Divisi::findOrFail($user->division);
+            $title = DashboardController::title($division->name);
+        } else {
+            $title = DashboardController::title('Create Gallery');
+        }
 
         return view('admin.gallery.create', compact('title'));
     }
@@ -44,31 +53,19 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
             'files' => 'required',
             'files.*' => 'image|mimes:png,jpg,jpeg|max:2048'
-        ], [
-            'files.required' => 'Silahkan pilih minimal 1 file',
-            'files.*.image' => 'File yang diunggah harus berupa gambar',
-            'files.*.mimes' => 'Maaf format gambar tidak didukung',
-            'files.*.max' => 'Ukuran gambar max 2MB'
         ]);
-
 
         foreach ($request->file('files') as $file) {
             $filename = uniqid() . '.' . $file->getClientOriginalExtension();
             $file->storeAs('gallery', $filename, 'public');
 
-            Gallery::create([
-                'image' => 'gallery/' . $filename
-            ]);
+            Gallery::create(['image' => 'gallery/' . $filename]);
         }
-        return redirect()->route('admin.gallery.index')->with('message', 'berhasil');
+        return redirect()->route('admin.gallery.index')->with('message', 'Gambar berhasil ditambahkan.');
     }
-
-
-
 
     /**
      * Display the specified resource.
@@ -81,10 +78,14 @@ class GalleryController extends Controller
     public function edit(string $id)
     {
         $user = auth()->user();
-        $divisions = Divisi::findOrFail($user->division);
         $gallery = Gallery::findOrFail($id);
 
-        $title = $title = DashboardController::title($divisions->name);
+        if ($user->role === 'author') {
+            $division = Divisi::findOrFail($user->division);
+            $title = DashboardController::title($division->name);
+        } else {
+            $title = DashboardController::title('Edit Gallery');
+        }
 
         return view('admin.gallery.edit', compact('gallery', 'title'));
     }

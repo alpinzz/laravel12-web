@@ -18,58 +18,54 @@ class BlogsController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $divisions = Divisi::findOrFail($user->division);
 
         if ($user->role === 'author') {
-            // Ambil ID divisi dari slug yang disimpan di field 'division' milik user
             $division = Divisi::where('slug', $user->division)->first();
 
-            // Jika divisi ditemukan, filter blog berdasarkan divisi_id
             if ($division) {
                 $blogs = Blogs::with('category', 'divisi')
                     ->where('divisi_id', $division->id)
                     ->latest()
                     ->get();
             } else {
-                // Jika divisi tidak ditemukan, tampilkan semua blog milik author
                 $blogs = Blogs::with('category', 'divisi')
                     ->where('user_id', $user->id)
                     ->latest()
                     ->get();
             }
 
-            $title = $title = DashboardController::title($divisions->name);
+            $title = DashboardController::title($division->name ?? 'Blogs');
         } else {
             // Admin lihat semua blog
             $blogs = Blogs::with('category', 'divisi', 'author')
                 ->latest()
                 ->get();
+            $title = DashboardController::title('Blogs');
         }
 
         return view('admin.blogs.index', compact('blogs', 'title'));
     }
 
-
-
-
     public function create()
     {
-
         $user = auth()->user();
         $divisions = Divisi::all();
-        $division = Divisi::findOrFail($user->division);
+
+        if ($user->role === 'author') {
+            $division = Divisi::findOrFail($user->division);
+            $title = DashboardController::title($division->name);
+        } else {
+            $division = null;
+            $title = DashboardController::title('Create Blog');
+        }
 
         $categories = Category::all();
-        $title = $title = DashboardController::title($division->name);
 
-        return view('admin.blogs.create', compact('categories', 'divisions', 'title'));
+        return view('admin.blogs.create', compact('categories', 'divisions', 'title', 'division'));
     }
 
     public function store(Request $request)
     {
-
-        // dd($request->all());
-
         $request->validate([
             'title' => 'required|string|max:255',
             'image' => 'nullable|image|max:2048',
@@ -77,27 +73,23 @@ class BlogsController extends Controller
             'category_id' => 'required|string|exists:categories,id',
         ]);
 
-        $division_id = Auth::user()->role === 'admin' ? $request->divisi_id : Auth::user()->division;
+        $user = Auth::user();
+        $division_id = $user->role === 'admin'
+            ? $request->divisi_id
+            : $user->division;
 
         $slug = Str::slug($request->title);
-
-        $count = Blogs::where('slug', 'like', $slug . '%')->count();
-        if ($count > 0) {
-            $slug .= '-' . ($count + 1);
+        if (Blogs::where('slug', $slug)->exists()) {
+            $slug .= '-' . uniqid();
         }
-
         $imagePath = null;
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-
             $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-
             $manager = new ImageManager(new Driver());
             $image = $manager->read($file)->resize(400, 400);
-
             $resizedImage = $image->toJpeg(80);
             Storage::disk('public')->put('image/' . $filename, $resizedImage);
-
             $imagePath = 'image/' . $filename;
         }
 
@@ -108,7 +100,7 @@ class BlogsController extends Controller
             'content' => $request->content,
             'category_id' => $request->category_id,
             'divisi_id' => $division_id,
-            'user_id' => auth()->check() ? auth()->id() : null
+            'user_id' => $user->id
         ]);
 
         return redirect()->route('admin.blogs.index')->with('message', 'Berita berhasil ditambahkan');
@@ -118,9 +110,9 @@ class BlogsController extends Controller
     {
         $blog = Blogs::findOrFail($id);
         $categories = Category::all();
-        $division = Divisi::findOrFail($blog->divisi_id);
+        $division = Divisi::find($blog->divisi_id);
 
-        $title = $title = DashboardController::title($division->name);
+        $title = DashboardController::title($division->name ?? 'Edit Blog');
 
         return view('admin.blogs.edit', compact('blog', 'categories', 'title'));
     }
@@ -132,7 +124,7 @@ class BlogsController extends Controller
             'image' => 'nullable|image|max:2048',
             'content' => 'required|string',
             'category_id' => 'required|string|exists:categories,id',
-            'divisi_id' => 'required|exists:divisis,id',
+            'divisi_id' => 'nullable|exists:divisis,id',
         ]);
 
         $blog = Blogs::findOrFail($id);
@@ -142,19 +134,21 @@ class BlogsController extends Controller
             $slug .= '-' . uniqid();
         }
 
-        $imagePath = $blog->image;
         if ($request->hasFile('image')) {
-            if ($imagePath && Storage::disk('public')->exists($imagePath)) {
-                Storage::disk('public')->delete($imagePath);
+            if ($blog->image && Storage::disk('public')->exists($blog->image)) {
+                Storage::disk('public')->delete($blog->image);
             }
-            $imagePath = $request->file('image')->store('blog_images', 'public');
+            $filename = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->storeAs('blog_images', $filename, 'public');
+            $blog->image = 'blog_images/' . $filename;
         }
 
         $blog->update([
             'title' => $request->title,
             'slug' => $slug,
-            'image' => $imagePath,
-            'category_id' => $request->category_id
+            'image' => $blog->image,
+            'category_id' => $request->category_id,
+            'divisi_id' => $request->divisi_id ?? $blog->divisi_id
         ]);
 
         return redirect()->route('admin.blogs.index')->with('message', 'Blog berhasil diupdate.');

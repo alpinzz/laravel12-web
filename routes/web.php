@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
@@ -19,9 +20,9 @@ Route::get('/blogs', [PagesController::class, 'allNews'])->name('all.news');
 Route::get('/blogs/{slug}', [PagesController::class, 'singleBlog'])->name('single.blog');
 Route::get('/blogs/divisi/{slug}', [PagesController::class, 'blogByDivisi'])->name('blog.divisi');
 Route::get('/blogs/kategori/{slug}', [PagesController::class, 'blogByCategory'])->name('blog.category');
-
-
 Route::get('/gallery', [PagesController::class, 'gallery'])->name('gallery');
+
+Route::get('/tentang-kami', [PagesController::class, 'about'])->name('about');
 Route::get('/contact', function () {
     return view('components.body_home.pages.contact');
 });
@@ -99,4 +100,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/slider/{id}/edit', [SliderController::class, 'edit'])->name('admin.slider.edit');
     Route::put('/admin/slider/{id}', [SliderController::class, 'update'])->name('admin.slider.update');
     Route::delete('/admin/slider/{id}', [SliderController::class, 'destroy'])->name('admin.slider.delete');
+});
+
+
+// Route AboutUs
+Route::middleware('auth')->group(function () {
+    Route::get('/admin/about/index', [AboutUsController::class, 'index'])->name('admin.about.index');
+    Route::get('/admin/about/create', [AboutUsController::class, 'create'])->name('admin.about.create');
+    Route::post('/admin/about/store', [AboutUsController::class, 'store'])->name('admin.about.store');
+    Route::get('/admin/about/edit', [AboutUsController::class, 'edit'])->name('admin.about.edit');
+    Route::post('/admin/about/update', [AboutUsController::class, 'update'])->name('admin.about.update');
+    Route::delete('/admin/about/delete', [AboutUsController::class, 'destroy'])->name('admin.about.delete');
 });

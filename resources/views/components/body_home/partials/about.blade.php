@@ -16,24 +16,7 @@
                         worries. Get ready for a clearer view of your finances like
                         never before!
                     </p>
-                    {{-- <div class="lonyo-faq-wrap1 mt-50">
-                        <div class="lonyo-faq-item open" data-aos="fade-up" data-aos-duration="500">
-                            <div class="lonyo-faq-header">
-                                <h4>Real-Time Expense Tracking:</h4>
-                                <div class="lonyo-active-icon">
-                                    <img class="plasicon" src="assets/images/v1/mynus.svg" alt="" />
-                                    <img class="mynusicon" src="assets/images/v1/plas.svg" alt="" />
-                                </div>
-                            </div>
-                            <div class="lonyo-faq-body">
-                                <p>
-                                    Automatically and syncs with bank accounts and credit
-                                    cards to provide instant updates on spending, helping
-                                    users stay aware of their all daily transactions.
-                                </p>
-                            </div>
-                        </div>
-                    </div> --}}
+
                 </div>
             </div>
         </div>

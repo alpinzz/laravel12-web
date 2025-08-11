@@ -91,7 +91,4 @@
 
     </div>
 
-    <!-- SweetAlert -->
-
-
 </x-layout>

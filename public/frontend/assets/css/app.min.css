@@ -6348,7 +6348,7 @@ textarea::placeholder {
     }
 }
 .lonyo-section-padding3 {
-    padding: 0 0 130px;
+    padding: 130px 0 130px;
     overflow: hidden;
 }
 @media (max-width: 991px) {

@@ -83,6 +83,13 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href="{{ route('admin.about.index') }}" class="tp-link">
+                            <i data-feather="users"></i>
+                            <span> About </span>
+                        </a>
+                    </li>
+
                     <li class="menu-title mt-2">General</li>
 
                     <li>

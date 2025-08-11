@@ -24,7 +24,7 @@
                                         <a href="{{ route('all.structure') }}"> Sruktur Organisasi </a>
                                     </li>
                                     <li>
-                                        <a href="index-02.html"> Tentang Kami </a>
+                                        <a href="{{ route('about') }}"> Tentang Kami </a>
                                     </li>
                                 </ul>
                             </li>

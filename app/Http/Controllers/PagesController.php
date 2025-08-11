@@ -25,7 +25,6 @@ class PagesController extends Controller
         });
 
 
-
         return view('components.body_home.pages.all_structure', compact('divisions'));
     }
 
@@ -94,5 +93,10 @@ class PagesController extends Controller
         $galleries = Gallery::latest()->get();
 
         return view('components.body_home.pages.gallery', compact('galleries'));
+    }
+
+    public function about()
+    {
+        return view('components.body_home.pages.aboutUs');
     }
 }

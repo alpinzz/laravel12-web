@@ -90,6 +90,13 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href="{{ route('visi.misi') }}" class="tp-link">
+                            <i data-feather="globe"></i>
+                            <span> Visi & Misi </span>
+                        </a>
+                    </li>
+
                     <li class="menu-title mt-2">General</li>
 
                     <li>

@@ -15,8 +15,10 @@ class SliderController extends Controller
     {
 
         $sliders = Slider::latest()->get();
+        $title = DashboardController::title();
 
-        return view('admin.slider.index', compact('sliders'));
+
+        return view('admin.slider.index', compact('sliders', 'title'));
     }
 
     /**
@@ -24,7 +26,9 @@ class SliderController extends Controller
      */
     public function create()
     {
-        return view('admin.slider.create');
+        $title = DashboardController::title();
+
+        return view('admin.slider.create', compact('title'));
     }
 
     /**

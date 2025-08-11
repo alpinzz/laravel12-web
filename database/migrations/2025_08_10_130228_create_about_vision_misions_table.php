@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('about_vision_misions', function (Blueprint $table) {
             $table->id();
             $table->text('vision');
-            $table->json('misions');
+            $table->json('missions');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

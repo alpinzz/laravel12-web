@@ -6,10 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class AboutVisionMision extends Model
 {
-    protected $table = 'about_vision_mision';
+    protected $table = 'about_vision_misions';
 
     protected $fillable = [
         'vision',
-        'mission'
+        'missions',
+        'image'
+    ];
+
+    protected $casts = [
+        'missions' => 'array',
     ];
 }

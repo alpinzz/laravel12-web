@@ -11,7 +11,7 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StructureController;
-
+use App\Http\Controllers\VisionMisionController;
 
 Route::get('/', [FrontendController::class, 'index'])->name('index');
 
@@ -105,10 +105,20 @@ Route::middleware('auth')->group(function () {
 
 // Route AboutUs
 Route::middleware('auth')->group(function () {
-    Route::get('/admin/about/index', [AboutUsController::class, 'index'])->name('admin.about.index');
+    Route::get('/admin/about', [AboutUsController::class, 'index'])->name('admin.about.index');
     Route::get('/admin/about/create', [AboutUsController::class, 'create'])->name('admin.about.create');
     Route::post('/admin/about/store', [AboutUsController::class, 'store'])->name('admin.about.store');
     Route::get('/admin/about/edit', [AboutUsController::class, 'edit'])->name('admin.about.edit');
     Route::post('/admin/about/update', [AboutUsController::class, 'update'])->name('admin.about.update');
     Route::delete('/admin/about/delete', [AboutUsController::class, 'destroy'])->name('admin.about.delete');
+});
+
+// Route Visi & Misi
+Route::middleware('auth')->group(function () {
+    Route::get('/admin/visi-misi', [VisionMisionController::class, 'index'])->name('visi.misi');
+    Route::get('/admin/visi-misi/create', [VisionMisionController::class, 'create'])->name('visi.misi.create');
+    Route::post('/admin/visi-misi/store', [VisionMisionController::class, 'store'])->name('visi.misi.store');
+    Route::get('/admin/visi-misi/edit', [VisionMisionController::class, 'edit'])->name('visi.misi.edit');
+    Route::put('/admin/visi-misi/update', [VisionMisionController::class, 'update'])->name('visi.misi.update');
+    Route::delete('/admin/visi-misi/delete', [VisionMisionController::class, 'destroy'])->name('visi.misi.delete');
 });

@@ -28,13 +28,11 @@ Route::get('/contact', function () {
     return view('components.body_home.pages.contact');
 });
 
-
-// Route::get('/dashboard', function () {
-//     return view('admin.index');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('admin/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
+});
+
+Route::middleware('auth', 'verified', 'role:author')->group(function () {
     Route::get('author/dashboard', [DashboardController::class, 'author'])->name('author.dashboard');
 });
 

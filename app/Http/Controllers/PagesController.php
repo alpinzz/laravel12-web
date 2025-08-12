@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AboutDivisionLogo;
+use App\Models\AboutUs;
+use App\Models\AboutVisionMision;
 use App\Models\Blogs;
 use App\Models\Category;
 use App\Models\Gallery;
@@ -97,6 +100,10 @@ class PagesController extends Controller
 
     public function about()
     {
-        return view('components.body_home.pages.aboutUs');
+        $about = AboutUs::first();
+        $visiMisi = AboutVisionMision::first();
+        $logo = AboutDivisionLogo::with('divisi')->get();
+
+        return view('components.body_home.pages.aboutUs', compact('about', 'visiMisi', 'logo'));
     }
 }

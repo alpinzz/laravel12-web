@@ -108,8 +108,8 @@
                 <div class="col-lg-5">
                     <div class="lonyo-about-us-thumb2 pr-lg-4 aos-init aos-animate" data-aos="fade-up"
                         data-aos-duration="700">
-                        <img src="{{ asset('frontend/assets/images/about-us/img7.png') }}" alt="IMM"
-                            class="img-fluid">
+                        <img src="{{ $about && $about->image ? asset('storage/' . $about->image) : asset('frontend/assets/img/about.jpg') }}"
+                            alt="IMM" class="img-fluid">
                     </div>
                 </div>
 
@@ -117,12 +117,8 @@
                 <div class="col-lg-7">
                     <div class="lonyo-default-content h-100 d-flex flex-column justify-content-start aos-init aos-animate"
                         data-aos="fade-up" data-aos-duration="900">
-                        <h2 class="mb-3">Ikatan Mahasiswa Muhammadiyah</h2>
-                        <p class="text-muted">
-                            Ikatan Mahasiswa Muhammadiyah (IMM) adalah organisasi mahasiswa yang
-                            berlandaskan nilai-nilai Islam dan berorientasi pada pengembangan intelektual, spiritual,
-                            dan sosial mahasiswa.
-                        </p>
+                        <h2 class="mb-1">{{ $about->title }}</h2>
+                        <p class="text-muted small">{!! $about->description !!}</p>
                     </div>
                 </div>
             </div>
@@ -130,40 +126,32 @@
     </div>
 
     <!-- Section 2: Visi Misi -->
-    <div class="lonyo-section-padding3 bg-light">
+    <div class="lonyo-section-padding3 bg-light mb-5">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-7 order-lg-1 order-2">
-                    <div class="lonyo-default-content pe-lg-4 aos-init aos-animate" data-aos="fade-up"
+                    <div class="lonyo-default-content visi pe-lg-4 aos-init aos-animate" data-aos="fade-up"
                         data-aos-duration="900">
                         <div class="mb-5">
                             <h4 class="mb-3">Visi</h4>
-                            <p>Menjadi organisasi mahasiswa yang unggul dalam pengembangan intelektual, spiritual, dan
-                                sosial, serta menjadi pelopor perubahan menuju masyarakat yang berkeadilan dan berakhlak
-                                mulia.</p>
+                            <p>{{ $visiMisi->vision }}</p>
                         </div>
 
                         <div>
                             <h4 class="mb-3">Misi</h4>
                             <ul class="list-unstyled">
-                                <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Membentuk kader
-                                    yang beriman, bertaqwa, dan berakhlak mulia</li>
-                                <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Mengembangkan
-                                    potensi intelektual mahasiswa</li>
-                                <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Mendorong
-                                    pengabdian kepada masyarakat</li>
-                                <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Memperjuangkan
-                                    nilai-nilai keadilan sosial</li>
-                                <li><i class="fas fa-check-circle text-primary me-2"></i> Membangun jaringan dengan
-                                    organisasi kemahasiswaan lainnya</li>
+                                @foreach ($visiMisi->missions as $misi)
+                                    <li class="mb-2"><i
+                                            class="fas fa-check-circle text-primary me-2"></i>{{ $misi }}</li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-5 order-lg-2 order-1 mb-4 mb-lg-0">
                     <div class="lonyo-about-us-thumb2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="700">
-                        <img src="{{ asset('frontend/assets/images/about-us/img7.png') }}" alt="Visi Misi IMM"
-                            class="img-fluid rounded">
+                        <img src="{{ $visiMisi->image ? asset('storage/' . $visiMisi->image) : asset('frontend/assets/images/about-us/img7.png') }}"
+                            alt="Visi Misi IMM" class="img-fluid rounded">
                     </div>
                 </div>
             </div>
@@ -179,84 +167,20 @@
                 <h2>Bidang-bidang</h2>
             </div>
             <div class="row">
+                @foreach ($logo as $item)
+                    <div class="col-lg-3 col-md-6">
+                        <div class="lonyo-team-wrap aos-init aos-animate" data-aos="fade-up" data-aos-duration="700">
+                            <div class="lonyo-team-thumb">
+                                <img src="{{ asset('storage/' . $item->logo) }}" alt="">
+                            </div>
+                            <div class="lonyo-team-content">
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="lonyo-team-wrap aos-init aos-animate" data-aos="fade-up" data-aos-duration="700">
-                        <div class="lonyo-team-thumb">
-                            <a href="single-team.html"><img src="assets/images/about-us/t2.png" alt=""></a>
-                        </div>
-                        <div class="lonyo-team-content">
-
-                            <p>Head of Product</p>
+                                <p>{{ $item->divisi->name }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="lonyo-team-wrap aos-init aos-animate" data-aos="fade-up" data-aos-duration="900">
-                        <div class="lonyo-team-thumb">
-                            <a href="single-team.html"><img src="assets/images/about-us/t3.png" alt=""></a>
-                        </div>
-                        <div class="lonyo-team-content">
+                @endforeach
 
-                            <p>Lead Software Engineer</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="lonyo-team-wrap aos-init aos-animate" data-aos="fade-up" data-aos-duration="1100">
-                        <div class="lonyo-team-thumb">
-                            <a href="single-team.html"><img src="assets/images/about-us/t4.png" alt=""></a>
-                        </div>
-                        <div class="lonyo-team-content">
-
-                            <p>Data Security Officer</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="lonyo-team-wrap aos-init aos-animate" data-aos="fade-up" data-aos-duration="500">
-                        <div class="lonyo-team-thumb">
-                            <a href="single-team.html"><img src="assets/images/about-us/t5.png" alt=""></a>
-                        </div>
-                        <div class="lonyo-team-content">
-
-                            <p>VP of Sales</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="lonyo-team-wrap aos-init aos-animate" data-aos="fade-up" data-aos-duration="700">
-                        <div class="lonyo-team-thumb">
-                            <a href="single-team.html"><img src="assets/images/about-us/t6.png" alt=""></a>
-                        </div>
-                        <div class="lonyo-team-content">
-
-                            <p>Marketing Director</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="lonyo-team-wrap aos-init aos-animate" data-aos="fade-up" data-aos-duration="900">
-                        <div class="lonyo-team-thumb">
-                            <a href="single-team.html"><img src="assets/images/about-us/t7.png" alt=""></a>
-                        </div>
-                        <div class="lonyo-team-content">
-
-                            <p>Customer Success Manager</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="lonyo-team-wrap aos-init aos-animate" data-aos="fade-up" data-aos-duration="1100">
-                        <div class="lonyo-team-thumb">
-                            <a href="single-team.html"><img src="assets/images/about-us/t8.png" alt=""></a>
-                        </div>
-                        <div class="lonyo-team-content">
-
-                            <p>Marketing Expert</p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

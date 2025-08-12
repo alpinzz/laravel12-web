@@ -6348,9 +6348,14 @@ textarea::placeholder {
     }
 }
 .lonyo-section-padding3 {
-    padding: 130px 0 130px;
+    padding: 130px 0 0 130px;
     overflow: hidden;
 }
+
+/* .lonyo-section-padding3.visi {
+    padding: 80px 0 0;
+} */
+
 @media (max-width: 991px) {
     .lonyo-section-padding3 {
         padding: 0 0 80px;
@@ -6570,9 +6575,10 @@ textarea::placeholder {
 .lonyo-section-title .max-w700 {
     max-width: 700px;
 }
-.lonyo-default-content h2 {
+/* .lonyo-default-content h2 {
     padding-bottom: 20px;
-}
+} */
+
 .lonyo-default-content.pb-35 {
     padding-bottom: 35px;
 }
@@ -6581,6 +6587,17 @@ textarea::placeholder {
         padding-bottom: 30px;
     }
 }
+
+.lonyo-default-content p {
+    font-size: 18px;
+    line-height: 1.3;
+    color: rgb(94, 92, 92);
+}
+
+.lonyo-default-content.visi p {
+    color: var(--default-font-color);
+}
+
 .lonyo-default-content.pb-35 p {
     margin-bottom: 30px;
 }

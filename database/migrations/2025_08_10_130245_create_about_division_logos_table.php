@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('about_division_logos', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->string('logo');
+            $table->foreignId('divisi_id')->constrained('divisis')->onDelete('cascade');
             $table->timestamps();
         });
     }

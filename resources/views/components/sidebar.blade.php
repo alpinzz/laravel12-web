@@ -97,6 +97,16 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href="{{ route('admin.logo') }}" class="tp-link">
+                            <i data-feather="aperture"></i>
+                            <span> Logo Bidang </span>
+                        </a>
+                    </li>
+
+
+
+
                     <li class="menu-title mt-2">General</li>
 
                     <li>

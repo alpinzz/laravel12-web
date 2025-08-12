@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutDivisiLogoController;
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -121,4 +122,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/visi-misi/edit', [VisionMisionController::class, 'edit'])->name('visi.misi.edit');
     Route::put('/admin/visi-misi/update', [VisionMisionController::class, 'update'])->name('visi.misi.update');
     Route::delete('/admin/visi-misi/delete', [VisionMisionController::class, 'destroy'])->name('visi.misi.delete');
+});
+
+
+// Route Logo Divisi
+Route::middleware('auth')->group(function () {
+    Route::get('/admin/logo-bidang', [AboutDivisiLogoController::class, 'index'])->name('admin.logo');
+
+    Route::get('/admin/logo-bidang/{divisi}/form', [AboutDivisiLogoController::class, 'form'])->name('admin.logo.form');
+    Route::post('/admin/logo-bidang/{divisi}/form', [AboutDivisiLogoController::class, 'store'])->name('admin.logo.store');
 });

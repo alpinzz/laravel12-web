@@ -7,7 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class AboutDivisionLogo extends Model
 {
     protected $fillable = [
-        'name',
         'logo',
+        'divisi_id'
     ];
+
+    public function divisi()
+    {
+        return $this->belongsTo(Divisi::class);
+    }
 }

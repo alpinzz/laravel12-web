@@ -63,8 +63,10 @@ class SliderController extends Controller
     public function edit($id)
     {
         $slider = Slider::findOrFail($id);
+        $title = DashboardController::title();
 
-        return view('admin.slider.edit', compact('slider'));
+
+        return view('admin.slider.edit', compact('slider', 'title'));
     }
 
     /**

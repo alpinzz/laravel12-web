@@ -84,21 +84,13 @@ class StructureController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('image')) {
-            try {
-                $file = $request->file('image');
-                $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-
-                $manager = new ImageManager(new Driver());
-                $image = $manager->read($file);
-                $image = $image->resize(400, 400);
-                $resizedImage = $image->toJpeg();
-                Storage::disk('public')->put('image/' . $filename, $resizedImage);
-
-                $imagePath = 'image/' . $filename;
-            } catch (\Exception $e) {
-                return redirect()->back()->with('error', 'Gagal menambah struktur' . $e->getMessage());
-            }
+            $file = $request->file('image');
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('image', $filename, 'public');
+            $imagePath = 'image/' . $filename;
         }
+
+
         OrganizationalStructure::create([
             'name' => $request->name,
             'position' => $request->position,

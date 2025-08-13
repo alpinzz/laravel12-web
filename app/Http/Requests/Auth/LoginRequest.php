@@ -23,6 +23,19 @@ class LoginRequest extends FormRequest
         return true;
     }
 
+    public function messages(): array
+    {
+        return
+            [
+                'login.required' => 'Kolom username atau email wajib diisi',
+                'password.required' => 'Password wajib diisi',
+                'role.required' => 'Silahkan pilih role',
+                'role.in' => 'Role tidak valid',
+                'division.required_if' => 'Silhkan pilih bidang jika role author',
+                'division.in' => 'Divisi tidak valid'
+            ];
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -66,11 +79,20 @@ class LoginRequest extends FormRequest
             }
         })->first();
 
+
+        if (!$user) {
+            throw ValidationException::withMessages([
+                'login' => 'Username/email tidak ditemukan atau role salah',
+            ]);
+        }
+
+
+
         if (!$user || !Hash::check($this->input('password'), $user->password)) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'login' => trans('auth.failed'),
+                'password' => 'Password yang anda masukkan salah',
             ]);
         }
 

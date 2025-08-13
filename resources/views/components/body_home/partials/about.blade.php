@@ -3,18 +3,16 @@
         <div class="row">
             <div class="col-lg-5 w-30">
                 <div class="lonyo-content-thumb" data-aos="fade-up" data-aos-duration="700">
-                    <img class="object-fit-cover w-100" src="{{ asset('frontend/assets/images/v1/content-thumb.png') }}"
+                    <img class="object-fit-cover w-100"
+                        src="{{ $about && $about->image ? asset('storage/' . $about->image) : asset('frontend/assets/img/about.jpg') }}"
                         alt="" />
                 </div>
             </div>
             <div class="col-lg-7 d-flex pt-4 w-5">
                 <div class="lonyo-default-content pl-30" data-aos="fade-up" data-aos-duration="700">
-                    <h2>Ikatan Mahasiswa Muhammadiyah</h2>
+                    <h2>{{ $about->title }}</h2>
                     <p class="data">
-                        With this tool, you can say goodbye to overspending, stay on
-                        track with your savings goals, and say goodbye to financial
-                        worries. Get ready for a clearer view of your finances like
-                        never before!
+                        {!! $about->description !!}
                     </p>
 
                 </div>

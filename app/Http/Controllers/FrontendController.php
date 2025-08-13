@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AboutUs;
 use App\Models\Divisi;
 use App\Models\OrganizationalStructure;
 use App\Models\Blogs;
@@ -14,6 +15,7 @@ class FrontendController extends Controller
     {
         $division = Divisi::where('slug', 'bph')->first();
         $sliders = Slider::latest()->get();
+        $about = AboutUs::first();
 
         $orderedPositions = ['Ketua Umum', 'Sekretaris Umum', 'Bendahara Umum'];
 
@@ -28,6 +30,6 @@ class FrontendController extends Controller
 
         $blogs = Blogs::latest()->take(3)->get();
 
-        return view('home.index', compact('members', 'blogs', 'sliders'));
+        return view('home.index', compact('members', 'blogs', 'sliders', 'about'));
     }
 }

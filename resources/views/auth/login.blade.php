@@ -42,63 +42,80 @@
                             @csrf
 
 
-
-                            @if ($errors->has('login'))
-                                <div class="alert alert-danger">
-                                    {{ $errors->first('login') }}
-                                </div>
-                            @endif
-
-                            @if ($errors->has('password'))
-                                <div class="alert alert-danger">
-                                    {{ $errors->first('password') }}
-                                </div>
-                            @endif
-
-
                             <div class="mb-3">
                                 <label for="email" class="form-label">Username or Email</label>
-                                <input class="form-control" type="text" id="email" name="login" required
-                                    placeholder="Enter username or email">
-                                {{-- @error('email')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror --}}
+                                <input class="form-control @error('login') is-invalid @enderror" type="text"
+                                    id="email" name="login" value="{{ old('login') }}">
+                                @error('login')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
+
+
+
+                            {{-- <div class="mb-3">
+                                <label for="role" class="form-label">Role</label>
+                                <select class="form-control" name="role" id="role" onchange="toggleDivision()">
+                                    <option value="admin">Admin</option>
+                                    <option value="author">Author</option>
+                                </select>
+                            </div> --}}
+
 
 
                             <div class="mb-3">
                                 <label for="role" class="form-label">Role</label>
-                                <select class="form-control" name="role" id="role" required
-                                    onchange="toggleDivision()">
-                                    <option value="admin">Admin</option>
-                                    <option value="author">Author</option>
+                                <select class="form-control @error('role') is-invalid @enderror" name="role"
+                                    id="role" onchange="toggleDivision()">
+                                    <option value="">Pilih Role</option>
+                                    <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                                    <option value="author" {{ old('role') == 'author' ? 'selected' : '' }}>Author
+                                    </option>
                                 </select>
+                                @error('role')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
+
 
                             <div class="mb-3" id="division-group" style="display: none;">
                                 <label for="division" class="form-label">Divisi</label>
-                                <select class="form-control" name="division" id="division">
+                                <select class="form-control @error('division') is-invalid @enderror" name="division"
+                                    id="division">
                                     <option value="">Pilih Bidang</option>
-                                    <option value="bph">BPH</option>
-                                    <option value="organisasi">Bidang Organisasi</option>
-                                    <option value="kader">Bidang Kader</option>
-                                    <option value="hikmah">Bidang Hikmah</option>
-                                    <option value="rpk">Bidang RPK</option>
-                                    <option value="olahraga">Bidang Olahraga dan Kepemudaan</option>
-                                    <option value="medkom">Bidang Medkom</option>
-                                    <option value="tkk">Bidang TKK</option>
+                                    <option value="bph" {{ old('division') == 'bph' ? 'selected' : '' }}>BPH
+                                    </option>
+                                    <option value="organisasi" {{ old('division') == 'organisasi' ? 'selected' : '' }}>
+                                        Bidang Organisasi</option>
+                                    <option value="kader" {{ old('division') == 'kader' ? 'selected' : '' }}>Bidang
+                                        Kader</option>
+                                    <option value="hikmah" {{ old('division') == 'hikmah' ? 'selected' : '' }}>Bidang
+                                        Hikmah</option>
+                                    <option value="rpk" {{ old('division') == 'rpk' ? 'selected' : '' }}>Bidang RPK
+                                    </option>
+                                    <option value="olahraga" {{ old('division') == 'olahraga' ? 'selected' : '' }}>
+                                        Bidang Olahraga dan Kepemudaan</option>
+                                    <option value="medkom" {{ old('division') == 'medkom' ? 'selected' : '' }}>Bidang
+                                        Medkom</option>
+                                    <option value="tkk" {{ old('division') == 'tkk' ? 'selected' : '' }}>Bidang TKK
+                                    </option>
                                 </select>
+                                @error('division')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
+
 
 
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input class="form-control" type="password" name="password" required id="password"
-                                    placeholder="Enter password">
+                                <input class="form-control @error('password') is-invalid @enderror" type="password"
+                                    name="password" id="password">
                                 @error('password')
-                                    <small class="text-danger">{{ $message }}</small>
+                                    <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
 
                             <div class="mb-3 text-end">
                                 <a href="{{ route('password.request') }}" class="text-muted">Lupa password?</a>

@@ -12,7 +12,7 @@
 
      <!-- end content -->
 
-     <x-body_home.partials.about />
+     <x-body_home.partials.about :about="$about" />
      <!-- end content -->
 
      <x-body_home.partials.structure :members="$members" />

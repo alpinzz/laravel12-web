@@ -106,4 +106,9 @@ class PagesController extends Controller
 
         return view('components.body_home.pages.aboutUs', compact('about', 'visiMisi', 'logo'));
     }
+
+    public function contact()
+    {
+        return view('components.body_home.pages.contact');
+    }
 }

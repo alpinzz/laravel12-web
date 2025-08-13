@@ -86,11 +86,8 @@ class BlogsController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-            $manager = new ImageManager(new Driver());
-            $image = $manager->read($file)->resize(400, 400);
-            $resizedImage = $image->toJpeg(80);
-            Storage::disk('public')->put('image/' . $filename, $resizedImage);
-            $imagePath = 'image/' . $filename;
+            $path = $file->storeAs('blog_images', $filename, 'public');
+            $imagePath = 'blog_images/' . $filename;
         }
 
         Blogs::create([

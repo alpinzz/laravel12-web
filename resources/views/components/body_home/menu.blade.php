@@ -30,7 +30,7 @@
                 </li> --}}
 
                 <li>
-                    <a href="contact-us.html">Beranda</a>
+                    <a href="{{ route('index') }}">Beranda</a>
                 </li>
 
                 {{-- <li class="menu-item-has-children">
@@ -106,30 +106,30 @@
                     <a href="#">Profil</a>
                     <ul class="sub-menu">
                         <li>
-                            <a href="index.html"> Sruktur Organisasi </a>
+                            <a href="{{ route('all.structure') }}"> Sruktur Organisasi </a>
                         </li>
                         <li>
-                            <a href="index-02.html"> Tentang Kami </a>
+                            <a href="{{ route('about') }}"> Tentang Kami </a>
                         </li>
                     </ul>
                 </li>
 
                 <li>
-                    <a href="contact-us.html">Galeri</a>
+                    <a href="{{ route('gallery') }}">Galeri</a>
                 </li>
                 <li>
-                    <a href="contact-us.html">Berita</a>
+                    <a href="{{ route('all.news') }}">Berita</a>
                 </li>
                 <li>
-                    <a href="contact-us.html">Kontak</a>
+                    <a href="{{ route('contact') }}">Kontak</a>
                 </li>
             </ul>
         </div>
-        <div class="lonyo-mobile-menu-btn">
+        {{-- <div class="lonyo-mobile-menu-btn">
             <a class="lonyo-default-btn sm-size" href="contact-us.html" data-text="Get in Touch"><span
                     class="btn-wraper">Get in Touch</span></a>
             <a class="lonyo-default-btn sm-size" href="contact-us.html" data-text="Get in Touch"><span
                     class="btn-wraper">Get in Touch</span></a>
-        </div>
+        </div> --}}
     </div>
 </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BlogsController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\GalleryController;
@@ -22,11 +23,10 @@ Route::get('/blogs/{slug}', [PagesController::class, 'singleBlog'])->name('singl
 Route::get('/blogs/divisi/{slug}', [PagesController::class, 'blogByDivisi'])->name('blog.divisi');
 Route::get('/blogs/kategori/{slug}', [PagesController::class, 'blogByCategory'])->name('blog.category');
 Route::get('/gallery', [PagesController::class, 'gallery'])->name('gallery');
-
 Route::get('/tentang-kami', [PagesController::class, 'about'])->name('about');
-Route::get('/contact', function () {
-    return view('components.body_home.pages.contact');
-});
+Route::get('/kontak', [PagesController::class, 'contact'])->name('contact');
+Route::post('/kontak-pesan', [ContactController::class, 'store'])->name('contact.message');
+
 
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('admin/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
@@ -128,4 +128,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/admin/logo-bidang/{divisi}/form', [AboutDivisiLogoController::class, 'form'])->name('admin.logo.form');
     Route::post('/admin/logo-bidang/{divisi}/form', [AboutDivisiLogoController::class, 'store'])->name('admin.logo.store');
+});
+
+// Route Message
+Route::middleware('auth')->group(function () {
+    Route::get('/admin/message', [ContactController::class, 'index'])->name('admin.message');
 });

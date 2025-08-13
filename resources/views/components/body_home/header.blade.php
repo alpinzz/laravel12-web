@@ -111,7 +111,7 @@
                             </li>
 
                             <li>
-                                <a href="/contact">Kontak</a>
+                                <a href="{{ route('contact') }}">Kontak</a>
                             </li>
                         </ul>
                     </nav>

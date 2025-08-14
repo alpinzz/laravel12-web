@@ -123,7 +123,7 @@ Route::middleware('auth')->group(function () {
 
 
 // Route Logo Divisi
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'blockAuthorBPH')->group(function () {
     Route::get('/admin/logo-bidang', [AboutDivisiLogoController::class, 'index'])->name('admin.logo');
 
     Route::get('/admin/logo-bidang/{divisi}/form', [AboutDivisiLogoController::class, 'form'])->name('admin.logo.form');

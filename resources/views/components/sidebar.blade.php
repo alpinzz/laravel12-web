@@ -97,14 +97,18 @@
                         </a>
                     </li>
 
-                    <li>
-                        <a href="{{ route('admin.logo') }}" class="tp-link">
-                            <i data-feather="aperture"></i>
-                            <span> Logo Bidang </span>
-                        </a>
-                    </li>
+                    @php
+                        $user = Auth::user();
+                    @endphp
 
-
+                    @if (!$user->role === 'author' && optional($user->divisi)->slug === 'bph')
+                        <li>
+                            <a href="{{ route('admin.logo') }}" class="tp-link">
+                                <i data-feather="aperture"></i>
+                                <span> Logo Bidang </span>
+                            </a>
+                        </li>
+                    @endif
 
 
                     <li class="menu-title mt-2">General</li>

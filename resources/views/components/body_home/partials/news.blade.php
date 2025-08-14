@@ -33,14 +33,14 @@
                                         </ul>
                                     </div>
                                     <div class="lonyo-blog-content">
-                                        <a href="single-blog.html">
+                                        <a href="{{ route('single.blog', $blog->slug) }}">
                                             <h4>{{ Str::limit(strip_tags($blog->title), 30) }}</h4>
                                         </a>
                                         <p class="small">{!! Str::limit(strip_tags($blog->content), 100) !!}</p>
                                     </div>
-                                    <div class="lonyo-blog-btn">
-                                        <a href="single-blog.html" class="lonyo-default-btn blog-btn">continue
-                                            reading</a>
+                                    <div>
+                                        <a href="{{ route('single.blog', $blog->slug) }}"
+                                            class="next">Selengkapnya...</a>
                                     </div>
                                 </div>
                             </div>

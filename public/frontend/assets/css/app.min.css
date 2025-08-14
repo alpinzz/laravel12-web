@@ -47,7 +47,7 @@ html {
     height: 100%;
 }
 body {
-    color: var(--heading-color);
+    color: var(--heading-bg);
     font-family: "DM Sans", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -2250,7 +2250,7 @@ a.light-color {
     font-weight: 500;
     font-size: 1rem;
     transition: all 0.4s;
-    color: var(--heading-color);
+    color: var(--default-font-color);
 }
 .lonyo-footer-menu ul li a::before {
     content: " ";
@@ -2260,7 +2260,7 @@ a.light-color {
     height: 1px;
     position: absolute;
     transition: all 0.4s;
-    background: var(--heading-color);
+    background: var(--color-title);
 }
 .lonyo-footer-menu ul li a:hover::before {
     width: 100%;
@@ -2321,7 +2321,9 @@ a.light-color {
 }
 .lonyo-footer-bottom-text p {
     font-size: 18px;
+    font-weight: bold;
     line-height: 25px;
+    color: var(--light-color3);
 }
 .lonyo-footer-bottom-text.text2 p {
     color: var(--light-color);
@@ -4186,14 +4188,17 @@ th span {
     border-radius: 100px;
     justify-content: center;
     transition: all 0.4s;
-    border: 1px solid var(--heading-color);
+    border: 1px solid var(--default-font-color);
+}
+.lonyo-social-wrap ul li a i {
+    color: var(--default-font-color);
 }
 .lonyo-social-wrap ul li a:hover {
     border: 1px solid transparent;
-    background-color: var(--heading-bg);
+    background-color: var(--font-color);
 }
-.lonyo-social-wrap ul li a:hover path {
-    fill: var(--white-bg);
+.lonyo-social-wrap ul li a:hover i {
+    color: var(--white-bg);
 }
 .lonyo-social-wrap2 ul li {
     display: inline-block;
@@ -7779,7 +7784,7 @@ a.lonyo-default-btn.sm-size {
     top: 0;
     bottom: 0;
     z-index: 9999;
-    background-color: #142d6f;
+    background-color: var(--color-title);
     display: flex;
     align-items: center;
     justify-content: center;

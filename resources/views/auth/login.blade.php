@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('frontend/assets/images/logo/logo_AR-removebg-preview.webp') }}">
 
     <!-- App css -->
     <link href="{{ asset('backend/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
@@ -31,8 +31,8 @@
                     <div class="card-body p-4 p-md-5">
                         <div class="text-center mb-4">
                             <a href="index.html" class="auth-logo">
-                                <img src="{{ asset('frontend/assets/images/logo/LOGO AR.png') }}" alt="logo-dark"
-                                    class="mx-auto" height="45" />
+                                <img src="{{ asset('frontend/assets/images/logo/logo_AR-removebg-preview.webp') }}"
+                                    alt="logo-dark" class="mx-auto" height="45" />
                             </a>
                             <h4 class="mt-3">Selamat Datang</h4>
                             <p class="text-muted">Silakan masuk ke akun Anda</p>

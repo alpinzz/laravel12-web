@@ -7,8 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PK AR Fachruddin - immumpwr</title>
 
-    <link rel="shortcut icon" href="{{ asset('frontend/assets/images/LOGO AR.png') }}" type="image/x-icon" />
-    <link rel="icon" href="{{ asset('frontend/assets/images/LOGO AR.png') }}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ asset('frontend/assets/images/logo/logo_AR-removebg-preview.webp') }}"
+        type="image/x-icon" />
+    <link rel="icon" href="{{ asset('frontend/assets/images/logo/logo_AR-removebg-preview.webp') }}"
+        type="image/x-icon" />
     <!--- End favicon-->
 
     <link
@@ -30,6 +32,10 @@
 
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/main.css') }}" />
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/app.min.css') }}" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>

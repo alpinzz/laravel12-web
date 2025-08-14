@@ -9,7 +9,9 @@
                     </div>
 
                     @if ($blogs->isEmpty())
-                        <div class="text-muted">Belum ada postingan blog.</div>
+                        <div class="text-center py-5">
+                            <p class="text-muted">Belum ada berita nichh..</p>
+                        </div>
                     @endif
 
                     <div class="row">

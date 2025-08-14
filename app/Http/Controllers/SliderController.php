@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 class SliderController extends Controller
 {
@@ -34,20 +36,44 @@ class SliderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
         $request->validate([
-            'image' => 'required|mimes:png,jpg,jpeg|image'
+            'image' => 'required',
+            'image.*' => 'mimes:png,jpg,jpeg,webp|image'
         ]);
 
-        $imagePath = $request->file('image')->store('slider', 'public');
+        $manager = new ImageManager(new Driver());
 
-        Slider::create([
-            'image' => $imagePath
-        ]);
+        foreach ($request->file('image') as $file) {
+            try {
+                // Baca gambar
+                $image = $manager->read($file);
+
+                // Jika ukuran tidak sesuai, resize di server
+                if ($image->width() !== 1920 || $image->height() !== 1080) {
+                    $image->cover(1920, 1080);
+                }
+
+                // Simpan ke storage/public/slider
+                $filename = uniqid() . '.webp';
+                $path = 'slider/' . $filename;
+                $image->toWebp(90)->save(storage_path('app/public/' . $path));
+
+                // Simpan ke database lewat model Slider
+                Slider::create([
+                    'image' => $path
+                ]);
+            } catch (\Exception $e) {
+                return back()->withErrors(['error' => 'Gagal memproses gambar: ' . $e->getMessage()]);
+            }
+        }
 
         return redirect()->route('admin.slider.index')->with('message', 'Slider berhasil ditambahkan');
     }
+
+
 
     /**
      * Display the specified resource.
@@ -72,23 +98,50 @@ class SliderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,  $id)
+
+    public function update(Request $request, $id)
     {
         $slider = Slider::findOrFail($id);
 
         $request->validate([
-            'image' => 'nullable|image|mimes:png,jpg,jpeg|max:2048'
+            'image' => 'nullable|mimes:png,jpg,jpeg,webp|image'
         ]);
 
         if ($request->hasFile('image')) {
-            Storage::delete($slider->image);
-            $slider->image = $request->file('image')->store('slider', 'public');
+            $manager = new ImageManager(new Driver());
+            $file = $request->file('image');
+
+            try {
+                // Baca gambar
+                $image = $manager->read($file);
+
+                // Jika ukuran tidak sesuai, resize di server
+                if ($image->width() !== 1920 || $image->height() !== 1080) {
+                    $image->cover(1920, 1080);
+                }
+
+                // Hapus gambar lama
+                if ($slider->image && Storage::disk('public')->exists($slider->image)) {
+                    Storage::disk('public')->delete($slider->image);
+                }
+
+                // Simpan gambar baru
+                $filename = uniqid() . '.webp';
+                $path = 'slider/' . $filename;
+                $image->toWebp(90)->save(storage_path('app/public/' . $path));
+
+                // Update path di database
+                $slider->image = $path;
+            } catch (\Exception $e) {
+                return back()->withErrors(['error' => 'Gagal memproses gambar: ' . $e->getMessage()]);
+            }
         }
 
         $slider->save();
 
         return redirect()->route('admin.slider.index')->with('message', 'Berhasil update slider.');
     }
+
 
     /**
      * Remove the specified resource from storage.

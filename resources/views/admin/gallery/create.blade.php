@@ -39,7 +39,6 @@
             FilePondPluginFileValidateType,
             FilePondPluginImagePreview,
             FilePondPluginImageResize,
-            FilePondPluginImageTransform
         );
 
         const btnSave = document.getElementById('btnSave');
@@ -78,9 +77,6 @@
         pond.on('processfile', updateButtonState);
         pond.on('error', updateButtonState);
     </script>
-
-
-
 
 
 </x-layout>

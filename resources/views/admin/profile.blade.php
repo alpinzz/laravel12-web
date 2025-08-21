@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :title="$title">
     <div class="content">
         <div class="container-xxl">
             <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
@@ -57,8 +57,10 @@
                                                         <div class="form-group mb-3 row">
                                                             <label class="form-label">Email</label>
                                                             <div class="col-lg-12 col-xl-12">
-                                                                <input class="form-control" type="email"
-                                                                    name="email" value="{{ $profileData->email }}">
+                                                                <input class="form-control"
+                                                                    style="background-color: #f0f0f0;" type="email"
+                                                                    name="email" disabled
+                                                                    value="{{ $profileData->email }}">
                                                             </div>
                                                         </div>
 

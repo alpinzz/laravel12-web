@@ -1,94 +1,3 @@
-{{-- <x-layout :title="$title">
-
-    <div class="container-xxl">
-
-        <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
-            <div class="flex-grow-1">
-                <h4 class="fs-18 fw-semibold m-0">About</h4>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="card">
-
-                <div class="card-header">
-                    <h5 class="card-title mb-0">{{ $divisi->logo ? 'Ganti' : 'Unggah' }} Logo {{ $divisi->name }}</h5>
-                </div><!-- end card header -->
-
-                <div class="card-body">
-
-                    <div class="row">
-
-                        <div class="col-12">
-
-                            <form action="{{ route('admin.logo.store', $divisi) }}" method="POST"
-                                enctype="multipart/form-data">
-                                @csrf
-                                <div class="mb-3">
-                                    <label for="logo" class="form-label">Pilih Logo</label>
-                                    <input type="file" name="logo" id="logo" class="form-control" required>
-                                    @error('logo')
-                                        <small class="text-danger">{{ $message }}</small>
-                                    @enderror
-                                </div>
-
-                                @if ($divisi->logo)
-                                    <p>Logo saat ini:</p>
-                                    <img src="{{ asset('storage/' . $divisi->logo) }}"
-                                        style="max-height: 150px; object-fit: contain;">
-                                @endif
-
-                                <br><br>
-                                <button type="submit" class="btn btn-success">Simpan</button>
-                                <a href="{{ route('admin.logo') }}" class="btn btn-secondary">Kembali</a>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    {{-- <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet"> --}}
-
-<!-- Include Quill JavaScript -->
-{{-- <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
-
-    <script>
-        // Initialize Quill editor
-        var quill = new Quill('#quill-editor', {
-            theme: 'snow'
-        });
-
-        // On form submission, update the hidden input value with the editor content
-        document.getElementById('myForm').onsubmit = function() {
-            document.getElementById('service_desc').value = quill.root.innerHTML;
-        };
-    </script> --}}
-{{-- </x-layout>  --}}
-
-{{-- <x-layout :title="$title">
-    <div class="container-xxl py-3">
-        <h4>{{ $divisi->logoBidang ? 'Ganti Logo' : 'Unggah Logo' }} Bidang: {{ $divisi->name }}</h4>
-
-        <form action="{{ route('admin.logo.store', $divisi) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-
-            <div class="mb-3">
-                <label for="logo" class="form-label">Pilih Logo</label>
-                <input type="file" class="form-control @error('logo') is-invalid @enderror" name="logo" required>
-                @error('logo')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <button type="submit" class="btn btn-success">Simpan</button>
-            <a href="{{ route('admin.logo.show', $divisi) }}" class="btn btn-secondary">Batal</a>
-        </form>
-    </div>
-</x-layout> --}}
-
-
 <x-layout :title="$title">
     <div class="container-xxl py-3">
         <h4>{{ $divisi->name }} - {{ $divisi->logoBidang ? 'Ganti Logo' : 'Unggah Logo' }}</h4>
@@ -96,7 +5,7 @@
             @csrf
             <div class="mb-3">
                 <label for="logo" class="form-label">Pilih Logo</label>
-                <input type="file" name="logo" class="form-control" required>
+                <input type="file" name="logo" id="logo" class="filepond" required>
                 @error('logo')
                     <div class="text-danger mt-2">{{ $message }}</div>
                 @enderror
@@ -111,4 +20,50 @@
             <a href="{{ route('admin.logo') }}" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
+
+    <!-- FilePond core -->
+    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+
+    <!-- Plugins -->
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.min.js">
+    </script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js">
+    </script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.min.js"></script>
+
+    <!-- CSS -->
+    <link href="https://unpkg.com/filepond/dist/filepond.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css"
+        rel="stylesheet">
+
+    <script>
+        // Register FilePond plugins
+        FilePond.registerPlugin(
+            FilePondPluginFileValidateType,
+            FilePondPluginFileValidateSize,
+            FilePondPluginImagePreview,
+            FilePondPluginImageResize,
+            FilePondPluginImageTransform
+        );
+
+        // Init FilePond
+        FilePond.create(document.querySelector('#logo'), {
+            acceptedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
+            maxFileSize: '2MB',
+            instantUpload: false, // ikut submit form
+            storeAsFile: true, // biar dikirim sebagai input form biasa
+            imageResizeTargetWidth: 400,
+            imageResizeTargetHeight: 400,
+            labelIdle: 'Drag & Drop logo atau <span class="filepond--label-action">Browse</span>',
+            labelFileProcessingError: 'Terjadi kesalahan saat upload',
+            labelFileTypeNotAllowed: 'Hanya boleh upload PNG, JPG, JPEG',
+            labelMaxFileSizeExceeded: 'Ukuran file terlalu besar (max 2MB)',
+            labelMaxFileSize: 'Ukuran maksimal file adalah 2MB'
+        });
+    </script>
+
+
+
 </x-layout>

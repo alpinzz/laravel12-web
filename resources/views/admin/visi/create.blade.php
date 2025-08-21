@@ -22,27 +22,34 @@
                         <label class="form-label">Misi</label>
                         <div id="misions-wrapper">
                             <div class="input-group mb-2">
-                                <input type="text" class="form-control" name="missions" placeholder="Masukkan misi">
+                                <input type="text" class="form-control" name="missions[]" placeholder="Masukkan misi"
+                                    autocomplete="off">
                                 <button type="button" class="btn btn-danger remove-misi">X</button>
                             </div>
                         </div>
                         <button type="button" class="btn btn-primary btn-sm" id="add-misi">+ Tambah Misi</button>
                     </div>
 
-                    <!-- Gambar -->
                     <div class="mb-3">
                         <label class="form-label">Gambar</label>
-                        <input type="file" class="form-control" name="image">
-                        <div class="mt-2" id="image-preview" style="display:none;">
-                            <img src="" alt="Preview" class="img-thumbnail" style="max-height: 200px;">
-                        </div>
+                        <input type="file" class="filepond" name="image" id="image">
                     </div>
 
-                    <button type="submit" class="btn btn-success">Simpan</button>
+                    <button type="submit" class="btn btn-success" id="submitBtn" disabled>Simpan</button>
+                    <a href="{{ route('visi.misi') }}" class="btn btn-secondary">Batal</a>
                 </form>
             </div>
         </div>
     </div>
+
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
+
 
     <script>
         // Tambah field misi
@@ -63,20 +70,70 @@
                 e.target.parentElement.remove();
             }
         });
+    </script>
 
-        // Preview gambar
-        document.querySelector('input[type="file"]').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const preview = document.getElementById('image-preview');
-                    preview.style.display = 'block';
-                    preview.querySelector('img').src = event.target.result;
-                };
-                reader.readAsDataURL(file);
+    <script>
+        // === FilePond setup ===
+        FilePond.registerPlugin(
+            FilePondPluginFileValidateType,
+            FilePondPluginFileValidateSize,
+            FilePondPluginImagePreview,
+            FilePondPluginImageResize,
+            FilePondPluginImageTransform
+        );
+
+        FilePond.create(document.querySelector('#image'), {
+            acceptedFileTypes: ['image/png', 'image/jpeg'],
+            labelFileTypeNotAllowed: 'Hanya file PNG atau JPG yang diizinkan',
+            fileValidateTypeLabelExpectedTypes: 'Format yang didukung: {allTypes}',
+            maxFileSize: '2MB',
+            labelMaxFileSizeExceeded: 'Ukuran file terlalu besar',
+            labelMaxFileSize: 'Maksimal {filesize}',
+            imageResizeTargetWidth: 800,
+            imageResizeTargetHeight: 800,
+            storeAsFile: true,
+            instantUpload: false
+        });
+
+        // === Validasi form: tombol simpan disable kalau visi/misi kosong ===
+        const submitBtn = document.getElementById('submitBtn');
+        const visionInput = document.querySelector('textarea[name="vision"]');
+        const missionWrapper = document.getElementById('misions-wrapper');
+
+        function validateForm() {
+            let valid = true;
+
+            // Cek visi
+            if (!visionInput.value.trim()) {
+                valid = false;
+            }
+
+            // Cek misi (pastikan ada setidaknya satu input terisi)
+            const missionInputs = missionWrapper.querySelectorAll('input[name="missions"], input[name="missions[]"]');
+            let hasMission = false;
+            missionInputs.forEach(input => {
+                if (input.value.trim() !== '') {
+                    hasMission = true;
+                }
+            });
+            if (!hasMission) {
+                valid = false;
+            }
+
+            submitBtn.disabled = !valid;
+        }
+
+        // Event listener untuk semua field
+        visionInput.addEventListener('input', validateForm);
+        missionWrapper.addEventListener('input', validateForm);
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-misi') || e.target.id === 'add-misi') {
+                setTimeout(validateForm, 100); // tunggu DOM update
             }
         });
+
+        // Initial check
+        validateForm();
     </script>
 
 </x-layout>

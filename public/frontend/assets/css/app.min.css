@@ -4146,9 +4146,9 @@ th span {
     display: flex;
     gap: 24px;
     flex-wrap: wrap;
+    list-style-type: none;
 }
 .tag-share-social ul li {
-    list-style-type: none;
     display: inline-block;
 }
 .tag-share-social ul li a {
@@ -4172,7 +4172,6 @@ th span {
     height: 45px;
 }
 .lonyo-social-wrap ul li {
-    list-style-type: none;
     display: inline-block;
     margin-right: 15px;
     transition: all 0.4s;

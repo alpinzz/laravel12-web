@@ -108,13 +108,13 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-12">
                             <form action="{{ route('admin.slider.store') }}" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group mb-3">
                                     <label class="form-label">Gambar Slider</label>
-                                    <input type="file" id="image" name="image[]" multiple>
+                                    <input type="file" id="image" name="image[]" multiple class="w-100">
                                 </div>
                                 <button type="submit" class="btn btn-success">Simpan</button>
                                 <a href="#" class="btn btn-secondary">Batal</a>

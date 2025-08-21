@@ -31,7 +31,8 @@
                                 <div class="form-group mb-3 row">
                                     <label class="form-label">Profile Photo</label>
                                     <div class="col-lg-12 col-xl-12">
-                                        <input class="form-control" type="file" name="image" id="image">
+                                        <input class="filepond" type="file" name="image" id="image">
+
                                     </div>
                                 </div>
 
@@ -51,6 +52,18 @@
         </div>
     </div>
 
+    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+        rel="stylesheet">
+
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
+
+
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
     <!-- Include Quill JavaScript -->
@@ -67,4 +80,33 @@
             document.getElementById('service_desc').value = quill.root.innerHTML;
         };
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            FilePond.registerPlugin(
+                FilePondPluginFileValidateType,
+                FilePondPluginFileValidateSize,
+                FilePondPluginImagePreview,
+                FilePondPluginImageResize,
+                FilePondPluginImageTransform
+            );
+
+            FilePond.create(document.querySelector('#image'), {
+                allowImagePreview: true,
+                allowImageResize: true,
+                imageResizeTargetWidth: 200,
+                imageResizeTargetHeight: 400,
+                imageResizeMode: 'cover',
+                acceptedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
+                maxFileSize: '2MB',
+                storeAsFile: true,
+
+                // Custom pesan error
+                labelMaxFileSizeExceeded: 'Ukuran file melebihi 2MB',
+                labelFileTypeNotAllowed: 'Format file tidak didukung. Hanya PNG, JPG, JPEG',
+                fileValidateTypeLabelExpectedTypes: 'Harus berupa gambar',
+            });
+        });
+    </script>
+
 </x-layout>

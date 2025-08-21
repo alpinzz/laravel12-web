@@ -131,6 +131,6 @@ Route::middleware('auth', 'blockAuthorBPH')->group(function () {
 });
 
 // Route Message
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'role:admin')->group(function () {
     Route::get('/admin/message', [ContactController::class, 'index'])->name('admin.message');
 });

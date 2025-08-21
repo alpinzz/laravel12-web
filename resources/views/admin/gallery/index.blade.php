@@ -20,6 +20,9 @@
                     </a>
                 </div>
 
+                @if ($galleries->isEmpty())
+                    <div class="alert alert-warning">Belum ada gambar.</div>
+                @endif
 
                 <div class="table-responsive">
                     <table class="table table-hover mb-0">

@@ -33,10 +33,10 @@
                         <button type="button" class="btn btn-primary btn-sm" id="add-misi">+ Tambah Misi</button>
                     </div>
 
-                    <!-- Gambar -->
+
                     <div class="mb-3">
                         <label class="form-label">Gambar</label>
-                        <input type="file" class="form-control" name="image">
+                        <input type="file" class="filepond" name="image" id="image">
                         @if ($data->image)
                             <div class="mt-2">
                                 <img src="{{ asset('storage/' . $data->image) }}" alt="Preview" class="img-thumbnail"
@@ -50,6 +50,47 @@
             </div>
         </div>
     </div>
+
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
+    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.min.js">
+    </script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js">
+    </script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.min.js"></script>
+
+    <link href="https://unpkg.com/filepond/dist/filepond.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css"
+        rel="stylesheet">
+
+    <script>
+        // Register plugins
+        FilePond.registerPlugin(
+            FilePondPluginFileValidateType,
+            FilePondPluginFileValidateSize,
+            FilePondPluginImagePreview,
+            FilePondPluginImageResize,
+            FilePondPluginImageTransform
+        );
+
+        // Init FilePond
+        const pond = FilePond.create(document.querySelector('#image'), {
+            acceptedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
+            maxFileSize: '2MB',
+            instantUpload: false, // ikut submit form
+            storeAsFile: true, // kirim file sebagai input form
+            imageResizeTargetWidth: 800,
+            imageResizeTargetHeight: 800,
+            labelIdle: 'Drag & Drop gambar atau <span class="filepond--label-action">Browse</span>',
+            labelFileProcessingError: 'Terjadi kesalahan saat upload',
+            labelFileTypeNotAllowed: 'Hanya boleh upload gambar PNG, JPG, JPEG',
+            labelMaxFileSizeExceeded: 'Ukuran file terlalu besar (max 2MB)',
+            labelMaxFileSize: 'Ukuran maksimal file adalah 2MB'
+        });
+    </script>
+
 
     <script>
         // Tambah field misi

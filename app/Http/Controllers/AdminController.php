@@ -70,8 +70,9 @@ class AdminController extends Controller
 
         $id = Auth::user()->id;
         $profileData = User::find($id);
+        $title = DashboardController::title();
 
-        return view('admin.profile', compact('profileData'));
+        return view('admin.profile', compact('profileData', 'title'));
     }
 
 

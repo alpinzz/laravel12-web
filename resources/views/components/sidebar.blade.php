@@ -101,7 +101,7 @@
                         $user = Auth::user();
                     @endphp
 
-                    @if (!$user->role === 'author' && optional($user->divisi)->slug === 'bph')
+                    @if (!($user->role === 'author' && optional($user->divisi)->slug === 'bph'))
                         <li>
                             <a href="{{ route('admin.logo') }}" class="tp-link">
                                 <i data-feather="aperture"></i>
@@ -111,14 +111,18 @@
                     @endif
 
 
-                    <li class="menu-title mt-2">General</li>
+                    @auth
+                        @if (auth()->user()->role === 'admin')
+                            <li class="menu-title mt-2">General</li>
+                            <li>
+                                <a href="{{ route('admin.message') }}" class="tp-link">
+                                    <i data-feather="mail"></i>
+                                    <span> Message </span>
+                                </a>
+                            </li>
+                        @endif
+                    @endauth
 
-                    <li>
-                        <a href="{{ route('admin.message') }}" class="tp-link">
-                            <i data-feather="mail"></i>
-                            <span> Message </span>
-                        </a>
-                    </li>
 
 
                 </ul>

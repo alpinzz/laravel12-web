@@ -36,6 +36,10 @@
 
                 </div>
 
+                @if (is_null($data))
+                    <div class="alert alert-warning">Belum ada data visi & misi.</div>
+                @endif
+
                 <div class="table-responsive">
                     <table class="table table-hover mb-0">
                         <thead>
@@ -62,7 +66,8 @@
                                     </td>
                                     <td>
                                         @if ($data->image)
-                                            <img src="{{ asset('storare/') . $data->image }}" alt="">
+                                            <img src="{{ asset('storage/' . $data->image) }}" alt=""
+                                                width="120px">
                                         @else
                                             Tidak ada gambar
                                         @endif
@@ -90,8 +95,7 @@
 
     <script>
         document.getElementById('btn-alert-about')?.addEventListener('click', function(event) {
-            event.preventDefault(); // stop link agar tidak pindah halaman
-
+            event.preventDefault();
             Swal.fire({
                 icon: 'warning',
                 title: 'Oops...',
@@ -103,8 +107,8 @@
                     popup: 'animate__animated animate__fadeOutUp'
                 },
                 confirmButtonText: 'OK',
-                allowOutsideClick: false, // klik luar tidak menutup
-                allowEscapeKey: false // ESC tidak menutup
+                allowOutsideClick: false,
+                allowEscapeKey: false
             });
         });
     </script>

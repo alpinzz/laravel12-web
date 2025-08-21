@@ -12,7 +12,7 @@
 
                 <div class="card-header">
                     <h5 class="card-title mb-0">Edit About</h5>
-                </div><!-- end card header -->
+                </div>
 
                 <div class="card-body">
 
@@ -32,10 +32,11 @@
                                 <div class="form-group mb-3 row">
                                     <label class="form-label">Profile Photo</label>
                                     <div class="col-lg-12 col-xl-12">
-                                        <input class="form-control" type="file" name="image" id="image">
+                                        <input class="filepond" type="file" name="image" id="image">
                                     </div>
                                     @if (isset($about->image))
-                                        <img src="{{ asset('storage/' . $about->image) }}" alt="">
+                                        <img src="{{ asset('storage/' . $about->image) }}" alt=""
+                                            style="max-width: 200px">
                                     @endif
                                 </div>
 
@@ -56,6 +57,13 @@
         </div>
     </div>
 
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
 
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
@@ -75,6 +83,29 @@
         document.getElementById('myForm').onsubmit = function() {
             document.getElementById('service_desc').value = quill.root.innerHTML;
         };
+    </script>
+
+    <script>
+        FilePond.registerPlugin(
+            FilePondPluginFileValidateType,
+            FilePondPluginFileValidateSize,
+            FilePondPluginImagePreview,
+            FilePondPluginImageResize,
+            FilePondPluginImageTransform
+        );
+
+        FilePond.create(document.querySelector('#image'), {
+            acceptedFileTypes: ['image/png', 'image/jpeg'],
+            labelFileTypeNotAllowed: 'Hanya file PNG atau JPG yang diizinkan',
+            fileValidateTypeLabelExpectedTypes: 'Format yang didukung: {allTypes}',
+            maxFileSize: '2MB',
+            labelMaxFileSizeExceeded: 'Ukuran file terlalu besar',
+            labelMaxFileSize: 'Maksimal {filesize}',
+            imageResizeTargetWidth: 200,
+            imageResizeTargetHeight: 400,
+            storeAsFile: true, // ikut submit form
+            instantUpload: false // hanya saat klik tombol Simpan
+        });
     </script>
 
 </x-layout>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\AboutUs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 class AboutUsController extends Controller
 {
@@ -36,24 +38,40 @@ class AboutUsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|max:255',
-            'description' => 'required',
-            'image' => 'nullable|image|mimes:png,jpg,jpeg|max:2048'
+            'title' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'description' => 'required|string',
         ]);
 
-        $data = $request->only('title', 'description');
-
+        $imagePath = null;
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('about', 'public');
+            $file = $request->file('image');
+
+            // Pakai Intervention untuk resize jika FilePond gagal
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($file)->resize(200, 400);
+            $resizedImage = $image->toJpeg();
+
+            $filename = uniqid() . '.jpg';
+            $imagePath = 'about/' . $filename;
+
+            Storage::disk('public')->put($imagePath, $resizedImage);
         }
 
-        AboutUs::create($data);
+        AboutUs::create([
+            'title' => $request->title,
+            'image' => $imagePath,
+            'description' => $request->description,
+        ]);
 
-        return redirect()->route('admin.about.index')->with('message', 'About berhasil ditambahkan.');
+        return redirect()->route('admin.about.index')->with('message', 'About berhasil ditambahkan');
     }
+
 
     /**
      * Display the specified resource.
@@ -95,7 +113,7 @@ class AboutUsController extends Controller
 
         if ($request->hasFile('image')) {
             if ($about->image) {
-                Storage::delete('public/' . $about->image);
+                Storage::disk('public')->delete($about->image);
             }
 
             $about->image = $request->file('image')->store('about', 'public');
@@ -113,8 +131,8 @@ class AboutUsController extends Controller
     {
         $about = AboutUs::first();
 
-        if ($about->image && Storage::exists('public/' . $about->image)) {
-            Storage::delete('public/' . $about->image);
+        if ($about->image && Storage::disk('public')->exists($about->image)) {
+            Storage::disk('public')->delete($about->image);
         }
 
         $about->delete();

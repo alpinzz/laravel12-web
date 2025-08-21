@@ -11,7 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('frontend/assets/images/LOGO AR.png') }}">
+    <link rel="shortcut icon" href="{{ asset('frontend/assets/images/logo/logo_AR-removebg-preview.webp') }}">
 
     <!-- App css -->
     <link href="{{ asset('backend/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />

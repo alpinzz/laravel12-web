@@ -1,4 +1,4 @@
-<div class="continer-fluid px-0">
+<div class="class=container-fluid px-0 mt-md-0 mt-5">
 
     <div id="carouselExampleCaptions" class="carousel slide">
         <div class="carousel-indicators">

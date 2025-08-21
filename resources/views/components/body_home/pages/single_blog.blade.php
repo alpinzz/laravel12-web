@@ -3,7 +3,6 @@
 
     <div class="breadcrumb-wrapper light-bg">
         <div class="container">
-
             <div class="breadcrumb-content">
                 <h1 class="breadcrumb-title pb-0">Blog Details</h1>
                 <div class="breadcrumb-menu-wrapper">
@@ -19,15 +18,12 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
     <div class="lonyo-section-padding7 overflow-hidden">
         <div class="container">
             <div class="row">
-
-
                 <div class="col-lg-8">
                     <div class="lonyo-blog-d-wrap">
                         <div class="lonyo-blog-d-thumb aos-init aos-animate" data-aos="fade-up" data-aos-duration="700">
@@ -49,7 +45,6 @@
                             <p>{!! $blog->content !!}</p>
 
                             <div class="lonyo-blog-d-content-wrap">
-
                                 <div class="tag-share-social">
                                     <h4>Share:</h4>
                                     <ul>
@@ -103,13 +98,9 @@
                                 </div>
                             </div>
 
-
                         </div>
                     </div>
-
                 </div>
-
-
 
                 <div class="col-lg-4">
                     <div class="lonyo-blog-sidebar aos-init aos-animate" data-aos="fade-left" data-aos-duration="700">

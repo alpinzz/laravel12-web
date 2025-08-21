@@ -41,7 +41,6 @@ class VisionMisionController extends Controller
      */
     public function store(Request $request)
     {
-        $title = DashboardController::title();
 
         $request->validate([
             'vision' => 'required|string',
@@ -89,7 +88,7 @@ class VisionMisionController extends Controller
      */
     public function update(Request $request)
     {
-        $title = DashboardController::title();
+
         $request->validate([
             'vision' => 'required|string',
             'missions' => 'required|array',

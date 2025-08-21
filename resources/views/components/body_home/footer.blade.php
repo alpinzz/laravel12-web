@@ -112,22 +112,22 @@
                                 <ul class="text-center text-md-start">
                                     <!-- Item tautan -->
                                     <li>
-                                        <a href="index.html">Beranda</a>
+                                        <a href="{{ route('index') }}">Beranda</a>
                                     </li>
                                     <li>
-                                        <a href="index-02.html">Struktur Organisasi</a>
+                                        <a href="{{ route('all.structure') }}">Struktur Organisasi</a>
                                     </li>
                                     <li>
-                                        <a href="index-03.html">Tentang Kami</a>
+                                        <a href="{{ route('about') }}">Tentang Kami</a>
                                     </li>
                                     <li>
-                                        <a href="about-us.html">Galeri</a>
+                                        <a href="{{ route('gallery') }}">Galeri</a>
                                     </li>
                                     <li>
-                                        <a href="contact-us.html">Berita</a>
+                                        <a href="{{ route('all.news') }}">Berita</a>
                                     </li>
                                     <li>
-                                        <a href="contact-us.html">Kontak</a>
+                                        <a href="{{ route('contact') }}">Kontak</a>
                                     </li>
                                 </ul>
                             </div>

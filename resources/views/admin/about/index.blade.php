@@ -56,7 +56,7 @@
                                     <td>
                                         @if ($about->image)
                                             <img src="{{ asset('storage/' . $about->image) }}" alt=""
-                                                width="150px">
+                                                width="150px" height="auto">
                                         @else
                                             Tidak ada gambar
                                         @endif

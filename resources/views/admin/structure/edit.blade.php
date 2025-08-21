@@ -44,14 +44,19 @@
                                 <div class="form-group mb-3 row">
                                     <label class="form-label">Profile Photo</label>
                                     <div class="col-lg-12 col-xl-12">
-                                        <input class="form-control" type="file" name="image" id="image">
+                                        <input class="filepond" type="file" name="image" id="image">
                                     </div>
                                 </div>
                                 @if ($member->image)
                                     <div class="form-group mb-3">
-                                        <img src="{{ asset('storage/' . $member->image) }}" alt="">
+                                        <!-- tambah text-center jika ingin di tengah -->
+                                        <img src="{{ asset('storage/' . $member->image) }}" alt="Profile Photo"
+                                            class="img-thumbnail rounded"
+                                            style="width: 120px; height: 120px; object-fit: contain;">
                                     </div>
                                 @endif
+
+
 
                                 <button type="submit" class="btn btn-success">Simpan</button>
                                 <a href="{{ route('admin.structure.index', $division->slug) }}"
@@ -64,4 +69,54 @@
             </div>
         </div>
     </div>
+
+
+    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+        rel="stylesheet" />
+
+
+    <!-- FilePond JS -->
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            FilePond.registerPlugin(
+                FilePondPluginFileValidateType,
+                FilePondPluginFileValidateSize,
+                FilePondPluginImagePreview,
+                FilePondPluginImageResize,
+                FilePondPluginImageTransform
+            );
+
+            const existingImage = document.querySelector('#image').dataset.existing;
+
+            const pond = FilePond.create(document.querySelector('#image'), {
+                allowImagePreview: true,
+                allowImageResize: true,
+                imageResizeTargetWidth: 400,
+                imageResizeTargetHeight: 400,
+                imageResizeMode: 'cover',
+                acceptedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
+                maxFileSize: '2MB',
+                storeAsFile: true,
+
+                // preload gambar lama kalau ada
+                files: existingImage ? [{
+                    source: existingImage,
+                    options: {
+                        type: 'local'
+                    }
+                }] : []
+            });
+        });
+    </script>
+
+
 </x-layout>

@@ -88,14 +88,22 @@
                             <ul class="justify-content-center justify-content-md-start">
                                 <!-- Item sosial media -->
                                 <li>
-                                    <a href="https://www.facebook.com">
+                                    <a href="https://www.tiktok.com/@pk_arfachruddinumpwrj" target="_blank"
+                                        rel="noopener noreferrer">
                                         <i class="fa-brands fa-tiktok fa-xs" title="Tiktok"></i>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="https://www.instagram.com">
+                                    <a href="https://www.instagram.com/pk_arfachruddinumpwrj" target="_blank"
+                                        rel="noopener noreferrer">
                                         <i class="fa-brands fa-instagram fa-xs" title="Instagram"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.youtube.com/@pkarfachruddin" target="_blank"
+                                        rel="noopener noreferrer">
+                                        <i class="fa-brands fa-youtube" title="YouTube"></i>
                                     </a>
                                 </li>
                             </ul>

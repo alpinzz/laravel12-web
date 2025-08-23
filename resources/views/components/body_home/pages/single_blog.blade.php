@@ -45,7 +45,7 @@
                             <p>{!! $blog->content !!}</p>
 
                             <div class="lonyo-blog-d-content-wrap">
-                                <div class="tag-share-social">
+                                {{-- <div class="tag-share-social">
                                     <h4>Share:</h4>
                                     <ul>
                                         <li>
@@ -95,7 +95,35 @@
                                             </a>
                                         </li>
                                     </ul>
+                                </div> --}}
+
+                                <div class="tag-share-social">
+                                    <h4>Share:</h4>
+                                    <ul>
+
+                                        <li>
+                                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}"
+                                                target="_blank" rel="noopener noreferrer">
+                                                <i class="fa-brands fa-facebook-f"></i>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}&text={{ urlencode($blog->title) }}"
+                                                target="_blank" rel="noopener noreferrer">
+                                                <i class="fa-brands fa-x-twitter"></i>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="https://api.whatsapp.com/send?text={{ urlencode($blog->title . ' ' . url()->current()) }}"
+                                                target="_blank" rel="noopener noreferrer">
+                                                <i class="fa-brands fa-whatsapp"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </div>
+
                             </div>
 
                         </div>

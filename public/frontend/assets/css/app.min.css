@@ -2193,7 +2193,7 @@ a.light-color {
     fill: none;
 }
 .progress-wrap svg.progress-circle path {
-    stroke: var(--heading-color);
+    stroke: var(--color-title);
     stroke-width: 4;
     box-sizing: border-box;
     -webkit-transition: all 0.2s linear;
@@ -4135,7 +4135,7 @@ th span {
     display: flex;
     gap: 24px;
     align-items: center;
-    list-style-type: none;
+    list-style: none;
 }
 @media (max-width: 767px) {
     .tag-share-social {
@@ -4146,11 +4146,27 @@ th span {
     display: flex;
     gap: 24px;
     flex-wrap: wrap;
-    list-style-type: none;
+    list-style: none;
 }
 .tag-share-social ul li {
+    list-style: none;
     display: inline-block;
 }
+.tag-share-social ul li::marker {
+    content: none !important;
+}
+.tag-share-social ul li::before,
+.tag-share-social ul li::after {
+    content: none !important;
+    display: none !important;
+}
+.tag-share-social ul,
+.tag-share-social ul li {
+    list-style: none !important;
+    margin: 0;
+    padding: 0;
+}
+
 .tag-share-social ul li a {
     width: 35px;
     height: 35px;
@@ -4164,8 +4180,8 @@ th span {
 .tag-share-social ul li a:hover {
     background-color: var(--heading-bg);
 }
-.tag-share-social ul li a:hover path {
-    fill: var(--white-bg);
+.tag-share-social ul li a:hover i {
+    color: var(--white-bg);
 }
 .tag-share-social.social2 ul li a {
     width: 45px;
@@ -4908,6 +4924,14 @@ blockquote::before {
     text-align: center;
     position: relative;
 }
+
+.lonyo-content-thumb img {
+    max-width: 80%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
 @media (max-width: 991px) {
     .lonyo-content-thumb {
         padding-bottom: 40px;

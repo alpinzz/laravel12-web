@@ -61,7 +61,7 @@
             </svg>
             <div class="top-arrow">
                 <svg width="12" height="20" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0.999999 1L8 8L1 15" stroke="#142D6F" stroke-width="2" stroke-linecap="round"
+                    <path d="M0.999999 1L8 8L1 15" stroke="#ff3f33" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" />
                 </svg>
             </div>

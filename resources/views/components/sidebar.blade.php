@@ -30,11 +30,13 @@
                     <li class="menu-title">Menu</li>
 
                     <li>
-                        <a href="#" class="tp-link">
+                        <a href="{{ Auth::user()->role === 'admin' ? route('admin.dashboard') : route('author.dashboard') }}"
+                            class="tp-link">
                             <i data-feather="home"></i>
                             <span> Dashboard </span>
                         </a>
                     </li>
+
 
                     <li class="menu-title">Pages</li>
 
@@ -114,6 +116,14 @@
                     @auth
                         @if (auth()->user()->role === 'admin')
                             <li class="menu-title mt-2">General</li>
+
+                            <li>
+                                <a href="{{ route('admin.video') }}" class="tp-link">
+                                    <i data-feather="film"></i>
+                                    <span> Video Profile </span>
+                                </a>
+                            </li>
+
                             <li>
                                 <a href="{{ route('admin.message') }}" class="tp-link">
                                     <i data-feather="mail"></i>

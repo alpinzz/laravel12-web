@@ -19,7 +19,7 @@
 
 
 
-     <x-body_home.partials.profile />
+     <x-body_home.partials.profile :video="$video" />
 
 
  </x-homelayout>

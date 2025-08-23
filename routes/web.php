@@ -13,6 +13,7 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StructureController;
+use App\Http\Controllers\VideoProfileController;
 use App\Http\Controllers\VisionMisionController;
 
 Route::get('/', [FrontendController::class, 'index'])->name('index');
@@ -128,6 +129,16 @@ Route::middleware('auth', 'blockAuthorBPH')->group(function () {
 
     Route::get('/admin/logo-bidang/{divisi}/form', [AboutDivisiLogoController::class, 'form'])->name('admin.logo.form');
     Route::post('/admin/logo-bidang/{divisi}/form', [AboutDivisiLogoController::class, 'store'])->name('admin.logo.store');
+});
+
+// Route Video
+Route::middleware('auth', 'role:admin')->group(function () {
+    Route::get('/admin/video', [VideoProfileController::class, 'index'])->name('admin.video');
+    Route::get('/admin/video/create', [VideoProfileController::class, 'create'])->name('admin.video.create');
+    Route::post('/admin/video/store', [VideoProfileController::class, 'store'])->name('admin.video.store');
+    Route::get('/admin/video/{video}/edit', [VideoProfileController::class, 'edit'])->name('admin.video.edit');
+    Route::put('/admin/video/{video}', [VideoProfileController::class, 'update'])->name('admin.video.update');
+    Route::delete('/admin/video/{video}', [VideoProfileController::class, 'destroy'])->name('admin.video.delete');
 });
 
 // Route Message

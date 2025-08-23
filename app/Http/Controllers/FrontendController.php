@@ -7,6 +7,7 @@ use App\Models\Divisi;
 use App\Models\OrganizationalStructure;
 use App\Models\Blogs;
 use App\Models\Slider;
+use App\Models\VideoProfile;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -16,6 +17,7 @@ class FrontendController extends Controller
         $division = Divisi::where('slug', 'bph')->first();
         $sliders = Slider::latest()->get();
         $about = AboutUs::first();
+        $video = VideoProfile::first();
 
         $orderedPositions = ['Ketua Umum', 'Sekretaris Umum', 'Bendahara Umum'];
 
@@ -30,6 +32,6 @@ class FrontendController extends Controller
 
         $blogs = Blogs::latest()->take(3)->get();
 
-        return view('home.index', compact('members', 'blogs', 'sliders', 'about'));
+        return view('home.index', compact('members', 'blogs', 'sliders', 'about', 'video'));
     }
 }

@@ -23,13 +23,11 @@
                 <div class="mb-3 d-flex justify-content-end">
 
                     @if (!$about)
-                        {{-- Kalau belum ada data About --}}
                         <a href="{{ route('admin.about.create') }}" class="btn btn-primary">
                             + Tambah
                         </a>
                     @else
-                        {{-- Kalau sudah ada data About --}}
-                        <a href="#" class="btn btn-primary" id="btn-alert-about">
+                        <a class="btn btn-primary" id="btn-alert-about">
                             + Tambah
                         </a>
                     @endif
@@ -41,7 +39,6 @@
                     <table class="table table-hover mb-0">
                         <thead>
                             <tr>
-                                {{-- <th scope="col">#</th> --}}
                                 <th scope="col">Judul</th>
                                 <th scope="col">Gambar</th>
                                 <th scope="col">Konten</th>
@@ -51,7 +48,6 @@
                         <tbody>
                             @if ($about)
                                 <tr>
-                                    {{-- <th scope="row">{{ $loop->iteration }}</th> --}}
                                     <td>{{ $about->title }}</td>
                                     <td>
                                         @if ($about->image)
@@ -105,7 +101,16 @@
     </script>
 
 
-    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+    @if (session('warning'))
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Peringatan',
+                text: "{{ html_entity_decode(session('warning')) }}",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
 
     <script>
         function confirmDelete(id) {

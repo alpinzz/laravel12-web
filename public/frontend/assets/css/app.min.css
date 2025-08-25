@@ -2239,6 +2239,52 @@ a.light-color {
     margin-bottom: 24px;
     font-size: 1.2rem;
 }
+
+@media (max-width: 768px) {
+    /* Pusatkan wrapper */
+    .lonyo-footer-menu-wrap {
+        display: flex;
+        justify-content: center !important; /* jangan space-between */
+    }
+
+    /* Styling list */
+    .lonyo-footer-menu1 ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column; /* susun ke bawah */
+        align-items: center; /* biar item di tengah */
+        gap: 8px;
+        text-align: center;
+    }
+
+    .lonyo-footer-menu1 ul li {
+        width: auto; /* biar ngikut konten */
+        text-align: center;
+    }
+}
+
+@media (max-width: 992px) {
+    .lonyo-footer-menu {
+        padding-top: 20px;
+    }
+
+    .lonyo-footer-menu1 ul {
+        padding-left: 0;
+        margin: 0;
+        text-align: center;
+    }
+
+    .lonyo-footer-menu1 ul li {
+        margin: 6px 0;
+    }
+
+    .lonyo-footer-menu img {
+        margin-top: 20px;
+    }
+}
+
 .lonyo-footer-menu ul li {
     margin-bottom: 12px;
 }
@@ -2304,7 +2350,6 @@ a.light-color {
 }
 .lonyo-footer-menu-wrap {
     display: flex;
-    /* align-items: center; */
     justify-content: space-between;
     gap: 30px;
 }

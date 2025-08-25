@@ -54,7 +54,10 @@ class ContactController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $title = DashboardController::title();
+        $message = ContactMessage::findOrFail($id);
+
+        return view('admin.message.show', compact('title', 'message'));
     }
 
     /**
@@ -78,6 +81,9 @@ class ContactController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $message = ContactMessage::findOrFail($id);
+        $message->delete();
+
+        return redirect()->back()->with('message', 'Pesan berhasil dihapus.');
     }
 }

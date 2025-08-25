@@ -37,15 +37,19 @@
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ $message->name }}</td>
                                     <td>{{ $message->email }}</td>
-                                    <td>{{ $message->created_at->format('d-m-Y H:i') }}</td>
+                                    <td>{{ $message->created_at->timezone('Asia/Jakarta')->format('d-m-Y H:i') }}
+                                    </td>
                                     <td>{{ $message->message }}</td>
                                     <td>
-                                        <a class="btn btn-primary btn-sm" href="#" role="button">Detail</a>
-                                        <form action="" method="POST" id="" style="display: inline">
+                                        <a class="btn btn-primary btn-sm"
+                                            href="{{ route('admin.message.show', $message->id) }}"
+                                            role="button">Detail</a>
+                                        <form action="{{ route('admin.message.delete', $message->id) }}" method="POST"
+                                            id="delete-form-{{ $message->id }}" style="display: inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="button" class="btn btn-danger btn-sm"
-                                                onclick="confirmDelete()">Hapus</button>
+                                                onclick="confirmDelete({{ $message->id }})">Hapus</button>
                                         </form>
                                     </td>
                                 </tr>

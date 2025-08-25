@@ -89,6 +89,8 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         document.getElementById('btn-alert-video')?.addEventListener('click', function(event) {
             event.preventDefault();
@@ -119,4 +121,15 @@
             });
         }
     </script>
+
+    @if (session('warning'))
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Peringatan',
+                text: "{{ html_entity_decode(session('warning')) }}",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
 </x-layout>

@@ -144,4 +144,6 @@ Route::middleware('auth', 'role:admin')->group(function () {
 // Route Message
 Route::middleware('auth', 'role:admin')->group(function () {
     Route::get('/admin/message', [ContactController::class, 'index'])->name('admin.message');
+    Route::get('/admin/message/{message}/detail', [ContactController::class, 'show'])->name('admin.message.show');
+    Route::delete('/admin/message/{message}', [ContactController::class, 'destroy'])->name('admin.message.delete');
 });

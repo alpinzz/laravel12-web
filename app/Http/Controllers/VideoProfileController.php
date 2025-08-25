@@ -26,6 +26,10 @@ class VideoProfileController extends Controller
     {
         $title = DashboardController::title();
 
+        if (VideoProfile::exists()) {
+            return redirect()->route('admin.video')->with('warning', 'Video sudah ada.');
+        }
+
         return view('admin.videoProfile.create', compact('title'));
     }
 

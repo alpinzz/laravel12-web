@@ -29,7 +29,7 @@ class AboutUsController extends Controller
         $title = DashboardController::title();
 
         if (AboutUs::exists()) {
-            return redirect()->route('admin.about.index')->with('error', 'About sudah tersedia.');
+            return redirect()->route('admin.about.index')->with('warning', 'About sudah tersedia.');
         }
 
         return view('admin.about.create', compact('title'));

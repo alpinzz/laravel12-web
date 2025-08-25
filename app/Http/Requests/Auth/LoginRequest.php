@@ -32,7 +32,9 @@ class LoginRequest extends FormRequest
                 'role.required' => 'Silahkan pilih role',
                 'role.in' => 'Role tidak valid',
                 'division.required_if' => 'Silhkan pilih bidang jika role author',
-                'division.in' => 'Divisi tidak valid'
+                'division.in' => 'Divisi tidak valid',
+                'g-recaptcha-response.required' => 'Silahkan centang Captcha',
+                'g-recaptcha-response.captcha' => 'Verifikasi captcha gagal, silahkan coba lagi',
             ];
     }
 
@@ -47,7 +49,8 @@ class LoginRequest extends FormRequest
             'login' => ['required', 'string'],
             'password' => ['required', 'string'],
             'role' => ['required', 'in:admin,author'],
-            'division' => ['nullable', 'required_if:role,author', 'in:bph,organisasi,kader,hikmah,rpk,olahraga,medkom,tkk']
+            'division' => ['nullable', 'required_if:role,author', 'in:bph,organisasi,kader,hikmah,rpk,olahraga,medkom,tkk'],
+            'g-recaptcha-response' => ['required', 'captcha'],
         ];
     }
 

@@ -62,10 +62,11 @@
                 <div class="col-lg-4">
                     <div class="lonyo-blog-sidebar aos-init aos-animate" data-aos="fade-left" data-aos-duration="700">
                         <div class="lonyo-blog-widgets">
-                            <form action="#">
+                            <form action="{{ route('search.blog') }}" method="GET">
                                 <div class="lonyo-search-box">
-                                    <input type="search" placeholder="Type keyword here">
-                                    <button id="lonyo-search-btn" type="button"><i class="ri-search-line"></i></button>
+                                    <input type="search" placeholder="Type keyword here" name="q"
+                                        value="{{ request('q') }}" autocomplete="off">
+                                    <button id="lonyo-search-btn" type="submit"><i class="ri-search-line"></i></button>
                                 </div>
                             </form>
                         </div>

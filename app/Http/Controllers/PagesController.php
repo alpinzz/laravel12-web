@@ -111,4 +111,18 @@ class PagesController extends Controller
     {
         return view('components.body_home.pages.contact');
     }
+
+    public function searchBlog(Request $request)
+    {
+
+        $keyword = $request->input('q');
+
+        $blogs = Blogs::with(['divisi', 'category', 'author'])
+            ->where('title', 'like', "%{$keyword}%")->latest()->paginate(5);
+
+        $categories = Category::withCount('blogs')->get();
+        $recentBlogs = Blogs::latest()->take(3)->get();
+
+        return view('components.body_home.pages.all_news', compact('blogs', 'categories', 'recentBlogs'));
+    }
 }

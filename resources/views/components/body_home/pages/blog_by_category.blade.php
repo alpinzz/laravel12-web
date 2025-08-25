@@ -62,10 +62,11 @@
                 <div class="col-lg-4">
                     <div class="lonyo-blog-sidebar aos-init aos-animate" data-aos="fade-left" data-aos-duration="700">
                         <div class="lonyo-blog-widgets">
-                            <form action="#">
+                            <form action="{{ route('search.blog') }}" method="GET">
                                 <div class="lonyo-search-box">
-                                    <input type="search" placeholder="Type keyword here">
-                                    <button id="lonyo-search-btn" type="button"><i class="ri-search-line"></i></button>
+                                    <input type="search" placeholder="Type keyword here" name="q"
+                                        autocomplete="off">
+                                    <button id="lonyo-search-btn" type="submit"><i class="ri-search-line"></i></button>
                                 </div>
                             </form>
                         </div>
@@ -85,7 +86,8 @@
                         <div class="lonyo-blog-widgets">
                             <h4>Recent Posts</h4>
                             @foreach ($recentBlogs as $recent)
-                                <a class="lonyo-blog-recent-post-item" href="{{ route('single.blog', $blog->slug) }}">
+                                <a class="lonyo-blog-recent-post-item"
+                                    href="{{ route('single.blog', $recent->slug) }}">
                                     <div class="lonyo-blog-recent-post-thumb"
                                         style="max-width: 80px; max-height: 80px; overflow: hidden;">
                                         <img style="width: 100%; height: auto; object-fit: cover;"

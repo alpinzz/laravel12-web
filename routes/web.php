@@ -18,6 +18,9 @@ use App\Http\Controllers\VisionMisionController;
 
 Route::get('/', [FrontendController::class, 'index'])->name('index');
 
+// Search Blogs
+Route::get('/blogs/search', [PagesController::class, 'searchBlog'])->name('search.blog');
+
 Route::get('/struktur-organisasi', [PagesController::class, 'allStructure'])->name('all.structure');
 Route::get('/blogs', [PagesController::class, 'allNews'])->name('all.news');
 Route::get('/blogs/{slug}', [PagesController::class, 'singleBlog'])->name('single.blog');
@@ -27,6 +30,7 @@ Route::get('/gallery', [PagesController::class, 'gallery'])->name('gallery');
 Route::get('/tentang-kami', [PagesController::class, 'about'])->name('about');
 Route::get('/kontak', [PagesController::class, 'contact'])->name('contact');
 Route::post('/kontak-pesan', [ContactController::class, 'store'])->name('contact.message');
+
 
 
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {

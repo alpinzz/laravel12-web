@@ -26,11 +26,29 @@
                                     <div class="lonyo-blog-meta">
                                         <ul>
                                             <li>
-                                                <a href="#" class="text-sm text-muted"><img
-                                                        src="{{ asset('frontend/assets/images/blog/date.svg') }}"
-                                                        alt="">{{ $blog->divisi->name ?? '-' }}</a> |
+                                                <a href="{{ route('blog.divisi', $blog->divisi->slug) }}"
+                                                    class="text-sm text-muted">
+                                                    {{ $blog->divisi->name ?? '-' }}</a> |
                                                 {{ $blog->created_at->diffForHumans() }}
                                             </li>
+
+                                            {{-- <li class="flex items-center space-x-2">
+                                                @if ($blog->user && $blog->user->image)
+                                                    <img src="{{ asset('upload/user_images/' . $blog->user->image) }}"
+                                                        alt="profile" class="w-3 h-3 rounded-full object-cover">
+                                                @else
+                                                    <img src="{{ asset('upload/no_image.jpg') }}" alt="default profile"
+                                                        class="w-3 h-3 rounded-full object-cover">
+                                                @endif
+
+                                                <a href="#" class="text-sm text-muted">
+                                                    {{ $blog->divisi->name ?? '-' }}
+                                                </a>
+
+                                                <span>|</span>
+                                                <span>{{ $blog->created_at->diffForHumans() }}</span>
+                                            </li> --}}
+
 
                                         </ul>
                                     </div>

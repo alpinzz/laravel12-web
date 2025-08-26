@@ -133,6 +133,7 @@ Route::middleware('auth', 'blockAuthorBPH')->group(function () {
 
     Route::get('/admin/logo-bidang/{divisi}/form', [AboutDivisiLogoController::class, 'form'])->name('admin.logo.form');
     Route::post('/admin/logo-bidang/{divisi}/form', [AboutDivisiLogoController::class, 'store'])->name('admin.logo.store');
+    Route::delete('/admin/logo-bidang/{divisi}', [AboutDivisiLogoController::class, 'destroy'])->name('admin.logo.delete');
 });
 
 // Route Video

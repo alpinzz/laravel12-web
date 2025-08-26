@@ -101,8 +101,15 @@ class AboutDivisiLogoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Divisi $divisi)
     {
-        //
+        if ($divisi->logoBidang) {
+            if (Storage::disk('public')->exists($divisi->logoBidang->logo)) {
+                Storage::disk('public')->delete($divisi->logoBidang->logo);
+            }
+            $divisi->logoBidang()->delete();
+        }
+
+        return redirect()->back()->with('message', 'Logo berhasil dihapus.');
     }
 }

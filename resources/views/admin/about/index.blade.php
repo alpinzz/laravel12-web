@@ -35,6 +35,10 @@
 
                 </div>
 
+                @if (is_null($about))
+                    <div class="alert alert-warning">Belum ada data about.</div>
+                @endif
+
                 <div class="table-responsive">
                     <table class="table table-hover mb-0">
                         <thead>

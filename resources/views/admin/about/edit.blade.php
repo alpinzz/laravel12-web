@@ -89,7 +89,6 @@
         FilePond.registerPlugin(
             FilePondPluginFileValidateType,
             FilePondPluginFileValidateSize,
-            FilePondPluginImagePreview,
             FilePondPluginImageResize,
             FilePondPluginImageTransform
         );

@@ -96,16 +96,21 @@ class VisionMisionController extends Controller
             'image' => 'nullable|image|mimes:png,jpg,jpeg|max:2048'
         ]);
 
+        $about = AboutVisionMision::firstOrFail();
+
         $data = [
             'vision' => $request->vision,
             'missions' => array_values($request->missions),
         ];
 
         if ($request->hasFile('image')) {
+            if ($about->image && Storage::disk('public')->exists($about->image)) {
+                Storage::disk('public')->delete($about->image);
+            }
             $data['image'] = $request->file('image')->store('vision_mision', 'public');
         }
 
-        AboutVisionMision::first()->update($data);
+        $about->update($data);
 
         return redirect()->route('visi.misi')->with('message', 'Visi & Misi berhasil diperbarui.');
     }
@@ -115,7 +120,6 @@ class VisionMisionController extends Controller
      */
     public function destroy()
     {
-        $title = DashboardController::title();
         $data = AboutVisionMision::first();
 
         if ($data->image && Storage::disk('public')->exists($data->image)) {

@@ -151,12 +151,12 @@ class SliderController extends Controller
         $slider = Slider::findOrFail($id);
 
         if ($slider->image && Storage::exists($slider->image)); {
-            Storage::delete($slider->image);
+            Storage::disk('public')->delete($slider->image);
         }
 
 
         $slider->delete();
 
-        return redirect()->back()->with('success', 'Berhasil hapus gambar slider.');
+        return redirect()->back()->with('message', 'Berhasil hapus gambar slider.');
     }
 }

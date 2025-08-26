@@ -175,7 +175,7 @@ class StructureController extends Controller
         $member = OrganizationalStructure::findOrFail($id);
 
         if ($member->image && Storage::disk('public')->exists($member->image)) {
-            Storage::disk()->delete($member->image);
+            Storage::disk('public')->delete($member->image);
         }
 
         $member->delete();

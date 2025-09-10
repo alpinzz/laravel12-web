@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Intervention\Image\Drivers\Gd\Driver;
-use Intervention\Image\ImageManager;
+use Intervention\Image\Facades\Image;
 use App\Models\Divisi;
 use App\Models\OrganizationalStructure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
+use Intervention\Image\ImageManager;
 
 class StructureController extends Controller
 {
@@ -86,7 +86,16 @@ class StructureController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-            $path = $file->storeAs('image', $filename, 'public');
+
+            $manager = new ImageManager(new Driver());
+
+            $image = $manager->read($file->getRealPath());
+
+            if ($image->width() !== 400 || $image->height() !== 500) {
+                $image->cover(400, 500)->save(storage_path('app/public/image/' . $filename));
+            } else {
+                $file->storeAs('image', $filename, 'public');
+            }
             $imagePath = 'image/' . $filename;
         }
 

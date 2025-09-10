@@ -104,7 +104,7 @@
                 allowImagePreview: true,
                 allowImageResize: true,
                 imageResizeTargetWidth: 400,
-                imageResizeTargetHeight: 400,
+                imageResizeTargetHeight: 500,
                 imageResizeMode: 'cover',
                 acceptedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
                 maxFileSize: '2MB',

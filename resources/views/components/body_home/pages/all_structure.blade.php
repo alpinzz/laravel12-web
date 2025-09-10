@@ -29,12 +29,11 @@
             </div>
             <div class="row justify-content-center">
                 @forelse ($division->structures as $member)
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-6 col-md-6 col-lg-3">
                         <div class="lonyo-team-wrap aos-init aos-animate" data-aos="fade-up" data-aos-duration="500">
                             <div class="lonyo-team-thumb">
-                                <a href="single-team.html"><img
-                                        src="{{ $member->image ? asset('storage/' . $member->image) : asset('frontend/assets/images/about-us/img1.png') }}"
-                                        alt="{{ $member->name }}"></a>
+                                <img src="{{ $member->image ? asset('storage/' . $member->image) : asset('frontend/assets/images/about-us/img1.png') }}"
+                                    alt="{{ $member->name }}">
                             </div>
                             <div class="lonyo-team-content">
 

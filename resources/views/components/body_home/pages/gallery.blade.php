@@ -33,16 +33,29 @@
                             data-aos="{{ ['fade-up', 'zoom-in', 'fade-left'][rand(0, 2)] }}"
                             data-aos-duration="{{ rand(500, 1000) }}">
                             <div class="lonyo-about-us-thumb">
-                                <img src="{{ asset('storage/' . $gallery->image) }}" alt="">
+                                <a href="{{ asset('storage/' . $gallery->image) }}" class="glightbox">
+                                    <img src="{{ asset('storage/' . $gallery->image) }}" alt="">
+                                </a>
                             </div>
-
                         </div>
-
                     </div>
                 @endforeach
+
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const lightbox = GLightbox({
+                selector: '.glightbox',
+                touchNavigation: true,
+                loop: true,
+                zoomable: true,
+                autoplayVideos: true
+            });
+        });
+    </script>
 
 
 

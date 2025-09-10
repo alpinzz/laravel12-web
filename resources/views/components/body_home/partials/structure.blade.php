@@ -8,21 +8,6 @@
 
         <div class="row">
             @forelse ($members as $member)
-                <!-- Card 1 -->
-                {{-- <div class="col-lg-4 col-md-6 col-12 mb-4 px-4">
-                    <div class="card border-0 bg-light">
-                        <img src="{{ $member->image ? asset('storage/' . $member->image) : asset('upload/no_image.jpg') }}"
-                            alt="{{ $member->image }}" class="object-fit-contain rounded" style="height: 290px" />
-                        <div class="card-body text-center">
-                            <h5 class="card-title">{{ $member->position }}</h5>
-                            <p class="card-text">
-                                {{ $member->name }}
-                            </p>
-
-                        </div>
-                    </div>
-                </div> --}}
-
                 <div class="col-lg-4 col-md-6 col-12 mb-4 px-4">
                     <div class="card border-0 bg-light text-center">
                         <div class="p-3">

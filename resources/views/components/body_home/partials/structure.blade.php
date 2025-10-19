@@ -25,14 +25,22 @@
                 </div>
 
             @empty
-                <div class="col-lg-4 col-md-6 col-12 mb-4 px-4">
-                    <div class="card border-0 bg-light">
+                <!-- <div class="col-lg-4 col-md-6 col-12 mb-4 px-4">
+                    <div class="card border-o bg-light overflow-hidden">
                         <img src="{{ asset('frontend/assets/img/team/no-image.jpg') }}" alt=""
-                            class="object-fit-cover rounded" style="height: 290px">
+                            class="object-cover rounded-2xl" style="height: 290px">
                         <div class="card-body text-center">
                             <h5 class="card-title">Ketua Umum</h5>
                             <p class="card-title">Nama</p>
                         </div>
+                    </div>
+                </div> -->
+                <div class="card border-0 bg-light overflow-hidden rounded-2xl">
+                    <img src="{{ asset('frontend/assets/img/team/no-image.jpg') }}" alt=""
+                        style="height: 290px; width:100%; border-radius: 1rem; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Ketua Umum</h5>
+                        <p class="card-title">Nama</p>
                     </div>
                 </div>
             @endforelse

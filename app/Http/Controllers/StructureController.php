@@ -21,8 +21,6 @@ class StructureController extends Controller
             abort(403, 'Anda tidak diizinkan mengakses bidang ini.');
         }
 
-
-
         $division = Divisi::where('slug', $slug)->firstOrFail();
         $members = $division->members()->orderBy('order')->get();
         $title = DashboardController::title($division->name);
@@ -50,66 +48,74 @@ class StructureController extends Controller
         return view('admin.structure.create', compact('division', 'positions', 'title'));
     }
 
-    public function store(Request $request)
-    {
+public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required',
+        'position' => 'required',
+        'image' => 'nullable|image|max:2048',
+        'order' => 'nullable|integer',
+        'divisi_id' => 'required|exists:divisis,id'
+    ]);
 
-        // dd($request->all());
+    $division = Divisi::findOrFail($request->divisi_id);
 
+    $isPosition = false;
 
-        $request->validate([
-            'name' => 'required',
-            'position' => 'required',
-            'image' => 'nullable|image|max:2048',
-            'order' => 'nullable|integer',
-            'divisi_id' => 'required|exists:divisis,id'
-        ]);
-
-        $division = Divisi::findOrFail($request->divisi_id);
-
-        $isPosition = false;
-
-        if ($division->slug === 'bph') {
-            if (in_array($request->position, ['Ketua Umum', 'Sekretaris Umum', 'Bendahara Umum'])) {
-                $isPosition = OrganizationalStructure::where('divisi_id', $division->id)->where('position', $request->position)->exists();
-            }
-        } else {
-            if (in_array($request->position, ['Ketua Bidang', 'Sekretaris Bidang'])) {
-                $isPosition = OrganizationalStructure::where('divisi_id', $division->id)->where('position', $request->position)->exists();
-            }
+    if ($division->slug === 'bph') {
+        if (in_array($request->position, ['Ketua Umum', 'Sekretaris Umum', 'Bendahara Umum'])) {
+            $isPosition = OrganizationalStructure::where('divisi_id', $division->id)
+                ->where('position', $request->position)
+                ->exists();
         }
-
-        if ($isPosition) {
-            return redirect()->back()->with('error', 'Posisi ' . $request->position . ' sudah ada');
+    } else {
+        if (in_array($request->position, ['Ketua Bidang', 'Sekretaris Bidang'])) {
+            $isPosition = OrganizationalStructure::where('divisi_id', $division->id)
+                ->where('position', $request->position)
+                ->exists();
         }
-
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-
-            $manager = new ImageManager(new Driver());
-
-            $image = $manager->read($file->getRealPath());
-
-            if ($image->width() !== 400 || $image->height() !== 500) {
-                $image->cover(400, 500)->save(storage_path('app/public/image/' . $filename));
-            } else {
-                $file->storeAs('image', $filename, 'public');
-            }
-            $imagePath = 'image/' . $filename;
-        }
-
-
-        OrganizationalStructure::create([
-            'name' => $request->name,
-            'position' => $request->position,
-            'image' => $imagePath,
-            'order' => $request->order ?? 0,
-            'divisi_id' => $request->divisi_id,
-        ]);
-
-        return redirect()->route('admin.structure.index', ['slug' => $division->slug])->with('message', 'Berhasil menambah struktur');
     }
+
+    if ($isPosition) {
+        return redirect()->back()->with('error', 'Posisi ' . $request->position . ' sudah ada');
+    }
+
+    $imagePath = null;
+
+    if ($request->hasFile('image')) {
+        $file = $request->file('image');
+        $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+
+        $directory = storage_path('app/public/image');
+
+        if (!file_exists($directory)) {
+            mkdir($directory, 0775, true);
+        }
+
+        $manager = new ImageManager(new Driver());
+        $image = $manager->read($file->getRealPath());
+        $image->resize(400, 500, function ($constraint) {
+            $constraint->upsize();
+        });
+
+        $image->save($directory . '/' . $filename);
+
+        $imagePath = 'image/' . $filename;
+    }
+
+    OrganizationalStructure::create([
+        'name' => $request->name,
+        'position' => $request->position,
+        'image' => $imagePath,
+        'order' => $request->order ?? 0,
+        'divisi_id' => $request->divisi_id,
+    ]);
+
+    return redirect()
+        ->route('admin.structure.index', ['slug' => $division->slug])
+        ->with('message', 'Berhasil menambah struktur');
+}
+
 
     public function edit($slug, $id)
     {
@@ -155,7 +161,7 @@ class StructureController extends Controller
 
             $file = $request->file('image');
             $manager = new ImageManager(new Driver());
-            $image = $manager->read($file)->resize(400, 400);
+            $image = $manager->read($file)->resize(400, 500);
             $resizedImage = $image->toJpeg();
 
             $filename = uniqid() . '.jpg';

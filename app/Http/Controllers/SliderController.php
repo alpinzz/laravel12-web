@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\File;
 
 class SliderController extends Controller
 {
@@ -39,6 +40,9 @@ class SliderController extends Controller
 
     public function store(Request $request)
     {
+
+        // dd($request->all());
+
         $request->validate([
             'image' => 'required',
             'image.*' => 'mimes:png,jpg,jpeg,webp|image'
@@ -46,29 +50,35 @@ class SliderController extends Controller
 
         $manager = new ImageManager(new Driver());
 
-        foreach ($request->file('image') as $file) {
-            try {
-                // Baca gambar
-                $image = $manager->read($file);
+    foreach ($request->file('image') as $file) {
+        try {
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($file);
 
-                // Jika ukuran tidak sesuai, resize di server
-                if ($image->width() !== 1920 || $image->height() !== 1080) {
-                    $image->cover(1920, 1080);
-                }
-
-                // Simpan ke storage/public/slider
-                $filename = uniqid() . '.webp';
-                $path = 'slider/' . $filename;
-                $image->toWebp(90)->save(storage_path('app/public/' . $path));
-
-                // Simpan ke database lewat model Slider
-                Slider::create([
-                    'image' => $path
-                ]);
-            } catch (\Exception $e) {
-                return back()->withErrors(['error' => 'Gagal memproses gambar: ' . $e->getMessage()]);
+            if ($image->width() !== 1920 || $image->height() !== 1080) {
+                $image->cover(1920, 1080);
             }
+
+            // Pastikan folder ada
+            $directory = storage_path('app/public/slider');
+            if (!File::exists($directory)) {
+                File::makeDirectory($directory, 0755, true);
+            }
+
+            $filename = uniqid() . '.webp';
+            $path = 'slider/' . $filename;
+
+            // Simpan file ke folder
+            $image->toWebp(90)->save(storage_path('app/public/' . $path));
+
+            // Simpan ke database
+            Slider::create(['image' => $path]);
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Gagal menyimpan gambar: ' . $e->getMessage()]);
         }
+    }
+
 
         return redirect()->route('admin.slider.index')->with('message', 'Slider berhasil ditambahkan');
     }

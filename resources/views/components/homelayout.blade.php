@@ -5,6 +5,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Website resmi IMM PK AR Fachruddin - Informasi, berita, dan kegiatan Ikatan Mahasiswa Muhammadiyah Pimpinan Komisariat AR Fachruddin.">
+    <meta name="keywords"
+        content="IMM, PK, AR, AR Fachruddin, Ikatan Mahasiswa Muhammadiyah, Pimpinan Komisariat IMM AR Fachruddin">
+    <meta name="author" content="IMM PK AR Fachruddin">
+
     <title>PK AR Fachruddin - immumpwr</title>
 
     <link rel="shortcut icon" href="{{ asset('frontend/assets/images/logo/logo_AR-removebg-preview.webp') }}"

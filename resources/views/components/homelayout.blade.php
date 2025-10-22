@@ -13,10 +13,15 @@
 
     <title>PK AR Fachruddin - immumpwr</title>
 
-    <link rel="shortcut icon" href="{{ asset('frontend/assets/images/logo/logo_AR-removebg-preview.webp') }}"
+    {{-- <link rel="shortcut icon" href="{{ asset('frontend/assets/images/logo/logo_AR-removebg-preview.webp') }}"
         type="image/x-icon" />
     <link rel="icon" href="{{ asset('frontend/assets/images/logo/logo_AR-removebg-preview.webp') }}"
-        type="image/x-icon" />
+        type="image/x-icon" /> --}}
+
+    <link rel="icon" type="image/png" href="{{ asset('frontend/assets/images/logo/logo.png') }}">
+    <meta property="og:image" content="{{ asset('frontend/assets/images/logo/logo.png') }}">
+
+
     <!--- End favicon-->
 
     <!-- GLightbox CSS -->

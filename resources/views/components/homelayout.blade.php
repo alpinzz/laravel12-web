@@ -19,6 +19,7 @@
         type="image/x-icon" /> --}}
 
     <link rel="icon" type="image/png" href="{{ asset('frontend/assets/images/logo/logo.png') }}">
+    <link rel="shortcut icon" href="https://immpkar.my.id/frontend/assets/images/logo/logo.png" type="image/x-icon">
     <meta property="og:image" content="{{ asset('frontend/assets/images/logo/logo.png') }}">
 
 

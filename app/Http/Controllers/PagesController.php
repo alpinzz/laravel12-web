@@ -113,26 +113,16 @@ class PagesController extends Controller
     }
 
     public function searchBlog(Request $request)
-{
-    $keyword = trim($request->q);
+    {
 
-    if(!$keyword){
-        return redirect()->back()->with('message', 'Masukkan kata kunci pencarian');
+        $keyword = $request->input('q');
+
+        $blogs = Blogs::with(['divisi', 'category', 'author'])
+            ->where('title', 'like', "%{$keyword}%")->latest()->paginate(5);
+
+        $categories = Category::withCount('blogs')->get();
+        $recentBlogs = Blogs::latest()->take(3)->get();
+
+        return view('components.body_home.pages.all_news', compact('blogs', 'categories', 'recentBlogs'));
     }
-
-    $blogs = Blogs::with(['divisi', 'category', 'author'])
-        ->where(function($query) use ($keyword) {
-            $query->where('title', 'like', "%{$keyword}%")
-                  ->orWhere('content', 'like', "%{$keyword}%");
-        })
-        ->latest()
-        ->paginate(5);
-
-    $categories = Category::withCount('blogs')->get();
-    $recentBlogs = Blogs::latest()->take(3)->get();
-
-    return view('components.body_home.pages.all_news', compact('blogs', 'categories', 'recentBlogs'))
-            ->with('keyword', $keyword);
-}
-
 }

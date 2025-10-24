@@ -25,9 +25,9 @@ Route::get('/blogs/search', [PagesController::class, 'searchBlog'])->name('searc
 
 Route::get('/struktur-organisasi', [PagesController::class, 'allStructure'])->name('all.structure');
 Route::get('/blogs', [PagesController::class, 'allNews'])->name('all.news');
-Route::get('/blogs/{slug}', [PagesController::class, 'singleBlog'])->name('single.blog');
 Route::get('/blogs/divisi/{slug}', [PagesController::class, 'blogByDivisi'])->name('blog.divisi');
 Route::get('/blogs/kategori/{slug}', [PagesController::class, 'blogByCategory'])->name('blog.category');
+Route::get('/blogs/{slug}', [PagesController::class, 'singleBlog'])->name('single.blog');
 Route::get('/gallery', [PagesController::class, 'gallery'])->name('gallery');
 Route::get('/tentang-kami', [PagesController::class, 'about'])->name('about');
 Route::get('/kontak', [PagesController::class, 'contact'])->name('contact');

@@ -15,6 +15,8 @@ use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StructureController;
 use App\Http\Controllers\VideoProfileController;
 use App\Http\Controllers\VisionMisionController;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 
 Route::get('/', [FrontendController::class, 'index'])->name('index');
 
@@ -151,4 +153,25 @@ Route::middleware('auth', 'role:admin')->group(function () {
     Route::get('/admin/message', [ContactController::class, 'index'])->name('admin.message');
     Route::get('/admin/message/{message}/detail', [ContactController::class, 'show'])->name('admin.message.show');
     Route::delete('/admin/message/{message}', [ContactController::class, 'destroy'])->name('admin.message.delete');
+});
+
+
+// Matikan route register
+Route::any('/register', function () {
+    abort(403, 'Pendaftaran sudah ditutup.');
+});
+
+
+
+Route::get('/storage/{folder}/{filename}', function ($folder, $filename) {
+    $path = storage_path("app/public/{$folder}/{$filename}");
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    return Response::make($file, 200)->header("Content-Type", $type);
 });

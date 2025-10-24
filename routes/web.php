@@ -157,9 +157,9 @@ Route::middleware('auth', 'role:admin')->group(function () {
 
 
 // Matikan route register
-Route::any('/register', function () {
-    abort(403, 'Pendaftaran sudah ditutup.');
-});
+// Route::any('/register', function () {
+//     abort(403, 'Pendaftaran sudah ditutup.');
+// });
 
 
 

@@ -144,6 +144,7 @@ class BlogsController extends Controller
             'title' => $request->title,
             'slug' => $slug,
             'image' => $blog->image,
+            'content' => $request->content,
             'category_id' => $request->category_id,
             'divisi_id' => $request->divisi_id ?? $blog->divisi_id
         ]);

@@ -65,7 +65,7 @@
                             <form action="{{ route('search.blog') }}" method="GET">
                                 <div class="lonyo-search-box">
                                     <input type="search" placeholder="Type keyword here" name="q"
-                                        value="{{ request('q') }}" autocomplete="off">
+                                        value="{{ $keyword ?? '' }}" autocomplete="off">
                                     <button id="lonyo-search-btn" type="submit"><i class="ri-search-line"></i></button>
                                 </div>
                             </form>

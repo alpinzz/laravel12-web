@@ -161,10 +161,8 @@ Route::middleware('auth', 'role:admin')->group(function () {
 //     abort(403, 'Pendaftaran sudah ditutup.');
 // });
 
-
-
-Route::get('/storage/{folder}/{filename}', function ($folder, $filename) {
-    $path = storage_path("app/public/{$folder}/{$filename}");
+Route::get('/storage/{path}', function ($path) {
+    $path = storage_path('app/public/' . $path);
 
     if (!File::exists($path)) {
         abort(404);
@@ -174,4 +172,4 @@ Route::get('/storage/{folder}/{filename}', function ($folder, $filename) {
     $type = File::mimeType($path);
 
     return Response::make($file, 200)->header("Content-Type", $type);
-});
+})->where('path', '.*');

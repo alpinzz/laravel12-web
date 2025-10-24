@@ -2,7 +2,7 @@
     <div class="lonyo-menu-area text-center">
         <div class="lonyo-menu-mobile-top">
             <div class="mobile-logo">
-                <a href="index.html">
+                <a href="{{ route('index') }}">
                     <img src="{{ asset('frontend/assets/images/logo/logo-header-ar.png') }}" alt="logo" />
                 </a>
             </div>

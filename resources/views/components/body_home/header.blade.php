@@ -3,7 +3,7 @@
         <div class="row gx-3 align-items-center justify-content-between">
             <div class="col-8 col-sm-auto">
                 <div class="header-logo1">
-                    <a href="index.html">
+                    <a href="{{ route('index') }}">
                         <img src="{{ asset('frontend/assets/images/logo/logo-header-ar.png') }}" alt="logo" />
                     </a>
                 </div>

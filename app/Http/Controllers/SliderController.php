@@ -92,36 +92,34 @@ class SliderController extends Controller
 
     $manager = new ImageManager(new Driver());
 
+    // ubah path di sini sesuai lokasi sebenarnya public_html kamu
+    $publicPath = '/home/immpkarc/domains/immpkar.my.id/public_html/upload/slider';
+
     foreach ($request->file('image') as $file) {
         try {
             $image = $manager->read($file);
 
-            // Resize ke 1920x1080 jika belum pas
             if ($image->width() !== 1920 || $image->height() !== 1080) {
                 $image->cover(1920, 1080);
             }
 
-            $filename = uniqid() . '.webp';
-            $path = 'slider/' . $filename;
-
-            // Pastikan folder di public/uploads/slider ada
-            $directory = public_path('upload/slider');
-            if (!File::exists($directory)) {
-                File::makeDirectory($directory, 0755, true);
+            if (!File::exists($publicPath)) {
+                File::makeDirectory($publicPath, 0755, true);
             }
 
-            // Simpan langsung ke public/uploads/
-            $image->toWebp(90)->save(public_path('upload/' . $path));
+            $filename = uniqid() . '.webp';
+            $image->toWebp(90)->save($publicPath . '/' . $filename);
 
-            // Simpan ke database
-            Slider::create(['image' => $path]);
+            Slider::create(['image' => 'slider/' . $filename]);
 
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Gagal menyimpan gambar: ' . $e->getMessage()]);
         }
     }
 
-    return redirect()->route('admin.slider.index')->with('message', 'Slider berhasil ditambahkan');
+    return redirect()
+        ->route('admin.slider.index')
+        ->with('message', 'Slider berhasil ditambahkan');
 }
 
 

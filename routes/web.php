@@ -32,26 +32,15 @@ use Illuminate\Support\Facades\Response;
 //     return Response::make($file, 200)->header("Content-Type", $type);
 // })->where('path', '.*');
 
-Route::get('/storage/{path}', function ($path) {
+Route::get('/file/{path}', function ($path) {
     $fullPath = storage_path('app/public/' . $path);
 
-    // Debug tampilkan path dan status file
-    $debug = "Path yang dicari: $fullPath\n";
-
     if (!File::exists($fullPath)) {
-        $debug .= "❌ File tidak ditemukan.\n";
-    } else {
-        $debug .= "✅ File ditemukan.\n";
-
-        if (!is_readable($fullPath)) {
-            $debug .= "⚠️ File tidak bisa dibaca (permission error).\n";
-        } else {
-            $debug .= "📂 File bisa dibaca.\n";
-        }
+        abort(404, 'File tidak ditemukan: ' . $fullPath);
     }
 
-    // tampilkan hasil debug
-    return response("<pre>{$debug}</pre>");
+    $type = File::mimeType($fullPath);
+    return response()->file($fullPath, ['Content-Type' => $type]);
 })->where('path', '.*');
 
 

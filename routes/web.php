@@ -35,12 +35,23 @@ use Illuminate\Support\Facades\Response;
 Route::get('/storage/{path}', function ($path) {
     $fullPath = storage_path('app/public/' . $path);
 
+    // Debug tampilkan path dan status file
+    $debug = "Path yang dicari: $fullPath\n";
+
     if (!File::exists($fullPath)) {
-        // tampilkan lokasi yang dicari supaya kita tahu
-        return response("File tidak ditemukan di: " . $fullPath, 404);
+        $debug .= "❌ File tidak ditemukan.\n";
+    } else {
+        $debug .= "✅ File ditemukan.\n";
+
+        if (!is_readable($fullPath)) {
+            $debug .= "⚠️ File tidak bisa dibaca (permission error).\n";
+        } else {
+            $debug .= "📂 File bisa dibaca.\n";
+        }
     }
 
-    return response()->file($fullPath);
+    // tampilkan hasil debug
+    return response("<pre>{$debug}</pre>");
 })->where('path', '.*');
 
 

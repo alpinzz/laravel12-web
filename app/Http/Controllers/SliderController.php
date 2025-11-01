@@ -83,7 +83,7 @@ class SliderController extends Controller
     //     return redirect()->route('admin.slider.index')->with('message', 'Slider berhasil ditambahkan');
     // }
 
-    public function store(Request $request)
+public function store(Request $request)
 {
     $request->validate([
         'image' => 'required',
@@ -92,7 +92,6 @@ class SliderController extends Controller
 
     $manager = new ImageManager(new Driver());
 
-    // ubah path di sini sesuai lokasi sebenarnya public_html kamu
     $publicPath = '/home/immpkarc/domains/immpkar.my.id/public_html/upload/slider';
 
     foreach ($request->file('image') as $file) {
@@ -103,16 +102,24 @@ class SliderController extends Controller
                 $image->cover(1920, 1080);
             }
 
+            // tulis path debug ke log Laravel
+            \Log::info('Target simpan: ' . $publicPath);
+
             if (!File::exists($publicPath)) {
+                \Log::info('Membuat folder baru: ' . $publicPath);
                 File::makeDirectory($publicPath, 0755, true);
             }
 
             $filename = uniqid() . '.webp';
-            $image->toWebp(90)->save($publicPath . '/' . $filename);
+            $target = $publicPath . '/' . $filename;
 
-            Slider::create(['image' => 'slider/' . $filename]);
+            \Log::info('Simpan ke: ' . $target);
+            $image->toWebp(90)->save($target);
 
+            Slider::create(['image' => $filename]);
+            \Log::info('Berhasil simpan gambar: ' . $filename);
         } catch (\Exception $e) {
+            \Log::error('Gagal menyimpan gambar: ' . $e->getMessage());
             return back()->withErrors(['error' => 'Gagal menyimpan gambar: ' . $e->getMessage()]);
         }
     }
@@ -121,6 +128,7 @@ class SliderController extends Controller
         ->route('admin.slider.index')
         ->with('message', 'Slider berhasil ditambahkan');
 }
+
 
 
 

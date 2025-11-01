@@ -18,6 +18,20 @@ use App\Http\Controllers\VisionMisionController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 
+
+Route::get('/storage/{path}', function ($path) {
+    $path = storage_path('app/public/' . $path);
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    return Response::make($file, 200)->header("Content-Type", $type);
+})->where('path', '.*');
+
 Route::get('/', [FrontendController::class, 'index'])->name('index');
 
 // Search Blogs
@@ -161,15 +175,3 @@ Route::middleware('auth', 'role:admin')->group(function () {
 //     abort(403, 'Pendaftaran sudah ditutup.');
 // });
 
-Route::get('/storage/{path}', function ($path) {
-    $path = storage_path('app/public/' . $path);
-
-    if (!File::exists($path)) {
-        abort(404);
-    }
-
-    $file = File::get($path);
-    $type = File::mimeType($path);
-
-    return Response::make($file, 200)->header("Content-Type", $type);
-})->where('path', '.*');

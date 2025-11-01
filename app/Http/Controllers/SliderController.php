@@ -110,8 +110,6 @@ class SliderController extends Controller
             $filename = uniqid() . '.webp';
             $image->toWebp(90)->save($publicPath . '/' . $filename);
 
-            dd('Gambar tersimpan di: ' . $publicPath);
-
             Slider::create(['image' => 'slider/' . $filename]);
 
         } catch (\Exception $e) {

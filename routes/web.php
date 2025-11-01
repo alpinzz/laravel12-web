@@ -187,3 +187,6 @@ Route::middleware('auth', 'role:admin')->group(function () {
 //     abort(403, 'Pendaftaran sudah ditutup.');
 // });
 
+Route::get('/cek-path', function () {
+    return base_path();
+});

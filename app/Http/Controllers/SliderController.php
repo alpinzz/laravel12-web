@@ -105,13 +105,13 @@ class SliderController extends Controller
             $path = 'slider/' . $filename;
 
             // Pastikan folder di public/uploads/slider ada
-            $directory = public_path('uploads/slider');
+            $directory = public_path('upload/slider');
             if (!File::exists($directory)) {
                 File::makeDirectory($directory, 0755, true);
             }
 
             // Simpan langsung ke public/uploads/
-            $image->toWebp(90)->save(public_path('uploads/' . $path));
+            $image->toWebp(90)->save(public_path('upload/' . $path));
 
             // Simpan ke database
             Slider::create(['image' => $path]);

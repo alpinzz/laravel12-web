@@ -18,7 +18,7 @@
 
             @forelse ($sliders as $slider)
                 <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                    <img src="{{ url('storage/' . $slider->image) }}" class="d-block w-100" alt="carousel">
+                    <img src="{{ asset('storage/' . $slider->image) }}" class="d-block w-100" alt="carousel">
                 </div>
 
             @empty

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
 use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\File;
+
 
 class GalleryController extends Controller
 {

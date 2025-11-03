@@ -51,21 +51,48 @@ class GalleryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'files' => 'required',
+    //         'files.*' => 'image|mimes:png,jpg,jpeg|max:2048'
+    //     ]);
+
+    //     foreach ($request->file('files') as $file) {
+    //         $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+    //         $file->storeAs('gallery', $filename, 'public');
+
+    //         Gallery::create(['image' => 'gallery/' . $filename]);
+    //     }
+    //     return redirect()->route('admin.gallery.index')->with('message', 'Gambar berhasil ditambahkan.');
+    // }
+
     public function store(Request $request)
-    {
-        $request->validate([
-            'files' => 'required',
-            'files.*' => 'image|mimes:png,jpg,jpeg|max:2048'
-        ]);
+{
+    $request->validate([
+        'files' => 'required',
+        'files.*' => 'image|mimes:png,jpg,jpeg|max:2048'
+    ]);
 
-        foreach ($request->file('files') as $file) {
-            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('gallery', $filename, 'public');
+    foreach ($request->file('files') as $file) {
+        $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+        $destinationPath = public_path('gallery');
 
-            Gallery::create(['image' => 'gallery/' . $filename]);
+        // Pastikan folder 'public/gallery' ada
+        if (!File::exists($destinationPath)) {
+            File::makeDirectory($destinationPath, 0755, true);
         }
-        return redirect()->route('admin.gallery.index')->with('message', 'Gambar berhasil ditambahkan.');
+
+        // Simpan file ke public/gallery
+        $file->move($destinationPath, $filename);
+
+        // Simpan path ke database (misalnya 'gallery/namafile.jpg')
+        Gallery::create(['image' => 'gallery/' . $filename]);
     }
+
+    return redirect()->route('admin.gallery.index')->with('message', 'Gambar berhasil ditambahkan.');
+}
+
 
     /**
      * Display the specified resource.

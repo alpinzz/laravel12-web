@@ -19,28 +19,17 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 
 
-// Route::get('/storage/{path}', function ($path) {
-//     $path = storage_path('app/public/' . $path);
+Route::get('/storage/{path}', function ($path) {
+    $path = storage_path('app/public/' . $path);
 
-//     if (!File::exists($path)) {
-//         abort(404);
-//     }
-
-//     $file = File::get($path);
-//     $type = File::mimeType($path);
-
-//     return Response::make($file, 200)->header("Content-Type", $type);
-// })->where('path', '.*');
-
-Route::get('/file/{path}', function ($path) {
-    $fullPath = storage_path('app/public/' . $path);
-
-    if (!File::exists($fullPath)) {
-        abort(404, 'File tidak ditemukan: ' . $fullPath);
+    if (!File::exists($path)) {
+        abort(404);
     }
 
-    $type = File::mimeType($fullPath);
-    return response()->file($fullPath, ['Content-Type' => $type]);
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    return Response::make($file, 200)->header("Content-Type", $type);
 })->where('path', '.*');
 
 
